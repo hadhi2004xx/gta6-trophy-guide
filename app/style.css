@@ -1,7 +1,241 @@
-body { font-family: Arial, sans-serif; margin: 24px; color: #222; }
-header { display: flex; justify-content: space-between; align-items: baseline; }
-.controls { display: flex; gap: 16px; margin: 12px 0; align-items: center; }
-.import input { font-size: 12px; }
-table { border-collapse: collapse; width: 100%; }
-th, td { border-bottom: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; white-space: pre-line; }
-th { background: #f2f2f2; }
+/* Leonida 100% — Precision Technical / Swiss Grid.
+   Obsidian #090A0D, 1px hairlines, tabular numerals everywhere, one accent #10B981.
+   System fonts only: the guide works fully offline. */
+:root {
+  --bg: #090a0d;
+  --panel: #0e1013;
+  --panel-2: #12151a;
+  --ink: #f2f4f6;
+  --muted: #9aa3ad;
+  --faint: #6b7480;
+  --line: rgba(255, 255, 255, 0.08);
+  --accent: #10b981;
+  --accent-ink: #062e22;
+  --warn: #f59e0b;
+  --gold: #d4a017;
+  --silver: #b8bec6;
+  --bronze: #c07a45;
+  --platinum: #7dd3fc;
+}
+* { box-sizing: border-box; }
+html { font-size: 16px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+body, input, select, button { font-variant-numeric: tabular-nums; }
+h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: var(--accent); }
+button, select, input { font: inherit; color: inherit; }
+
+/* Masthead + audit strip */
+.masthead {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.masthead h1 { font-size: 2rem; max-width: 22ch; }
+.lede { color: var(--muted); max-width: 72ch; margin-top: 12px; }
+.audit {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0;
+  margin: 28px 0 0;
+  border: 1px solid var(--line);
+}
+.audit div { padding: 12px 14px; border-right: 1px solid var(--line); }
+.audit div:last-child { border-right: 0; }
+.audit dt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.audit dd { margin: 4px 0 0; font-size: 1.5rem; font-weight: 700; line-height: 1; }
+.progress { margin-top: 20px; display: flex; align-items: center; gap: 16px; }
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+.progress-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+#progress-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+main { max-width: 1080px; margin: 0 auto; padding: 0 24px 48px; }
+section { padding-top: 32px; }
+section h2 {
+  font-size: 1.25rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.section-note { color: var(--muted); font-size: 0.92rem; margin-top: 10px; max-width: 78ch; }
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 20px 0 4px;
+  border-bottom: 1px solid var(--line);
+}
+.field { display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: var(--muted); }
+.search-field { flex: 1 1 220px; }
+.controls input[type="search"],
+.controls select {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  border-radius: 2px;
+  color: var(--ink);
+}
+.controls input[type="search"]:focus,
+.controls select:focus,
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  padding: 8px 2px;
+  cursor: pointer;
+}
+.check input { accent-color: var(--accent); width: 16px; height: 16px; }
+.controls button,
+.import-btn {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.controls button:hover, .import-btn:hover { border-color: var(--accent); }
+#export { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.import-btn input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.result-count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--faint);
+  padding-top: 12px;
+}
+
+/* Roadmap */
+.stages { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.stage { background: var(--panel); padding: 16px; }
+.stage-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.stage h3 { font-size: 1rem; margin: 6px 0 8px; }
+.stage p { color: var(--muted); font-size: 0.88rem; }
+.stage-trophies { margin: 10px 0 0; padding: 0; list-style: none; font-size: 0.85rem; }
+.stage-trophies li {
+  padding: 3px 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.stage-trophies .done { color: var(--accent); }
+.stage-count { color: var(--faint); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.75rem; white-space: nowrap; }
+
+/* Trophy list */
+.list { margin-top: 16px; border-top: 1px solid var(--line); }
+.trophy { border-bottom: 1px solid var(--line); background: var(--bg); }
+.trophy.earned { background: var(--panel); }
+.trophy-head {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 4px;
+  cursor: pointer;
+}
+.trophy-head input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--accent); cursor: pointer; }
+.trophy-name { font-weight: 700; font-size: 1rem; }
+.trophy-name .masked { color: var(--faint); font-weight: 600; letter-spacing: 0.04em; }
+.trophy-desc { color: var(--muted); font-size: 0.92rem; margin-top: 2px; }
+.trophy-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  padding: 2px 7px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.chip.grade-platinum { color: var(--platinum); border-color: var(--platinum); }
+.chip.grade-gold { color: var(--gold); border-color: var(--gold); }
+.chip.grade-silver { color: var(--silver); border-color: var(--silver); }
+.chip.grade-bronze { color: var(--bronze); border-color: var(--bronze); }
+.chip.missable { color: var(--warn); border-color: var(--warn); }
+.chip.hidden-flag { color: var(--faint); }
+.chip.count { color: var(--accent); border-color: var(--accent); }
+.guide { padding: 0 4px 16px 44px; }
+.guide p { max-width: 78ch; font-size: 0.95rem; }
+.guide .sources-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: 10px;
+}
+.guide ul { margin: 4px 0 0; padding-left: 18px; font-size: 0.88rem; color: var(--muted); }
+.guide li { margin-top: 2px; }
+.guide .spoiler-note { color: var(--warn); font-size: 0.9rem; }
+
+/* Notes + sources */
+.notes ul, .sources ul { margin: 12px 0 0; padding-left: 20px; color: var(--muted); font-size: 0.95rem; }
+.notes li, .sources li { margin-top: 6px; max-width: 82ch; }
+.sources li a { word-break: break-all; }
+
+footer {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--faint);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 860px) {
+  .audit { grid-template-columns: repeat(4, 1fr); }
+  .audit div:nth-child(4n) { border-right: 0; }
+  .audit div:nth-child(-n+4) { border-bottom: 1px solid var(--line); }
+  .stages { grid-template-columns: 1fr; }
+  .masthead h1 { font-size: 1.6rem; }
+  .progress { flex-wrap: wrap; }
+}

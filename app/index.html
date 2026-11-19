@@ -3,23 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida 100% — GTA VI Trophy Guide &amp; Tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="masthead">
+  <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; Offline guide &amp; tracker</p>
+  <h1>Leonida 100% — GTA VI Trophy Guide &amp; Tracker</h1>
+  <p class="lede">Every one of the 55 official trophies, with its official name, description and grade, a guide in our own words with cited sources, and a roadmap to the Platinum. Tick a trophy off and it stays ticked in this browser. No network needed.</p>
+  <dl class="audit" id="audit" aria-label="List audit">
+    <div><dt>Trophies</dt><dd id="audit-total">55</dd></div>
+    <div><dt>Platinum</dt><dd id="audit-platinum">1</dd></div>
+    <div><dt>Gold</dt><dd id="audit-gold">2</dd></div>
+    <div><dt>Silver</dt><dd id="audit-silver">6</dd></div>
+    <div><dt>Bronze</dt><dd id="audit-bronze">46</dd></div>
+    <div><dt>Hidden</dt><dd id="audit-hidden">28</dd></div>
+    <div><dt>Missable</dt><dd id="audit-missable">1</dd></div>
+    <div><dt>Online</dt><dd id="audit-online">0</dd></div>
+  </dl>
+  <div class="progress" role="status" aria-live="polite">
+    <div class="progress-bar"><span id="progress-fill"></span></div>
+    <p id="progress-text">0 of 55 earned &middot; 0%</p>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<main>
+  <section class="controls" aria-label="Tracker controls">
+    <label class="field search-field">Search
+      <input id="search" type="search" placeholder="Name, mission or keyword…" autocomplete="off">
+    </label>
+    <label class="field">Kind
+      <select id="kind">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="missable">Missable</option>
+        <option value="collectibles">Collectibles</option>
+        <option value="activities">Activities</option>
+        <option value="crime">Crime &amp; robbery</option>
+        <option value="exploration">Exploration</option>
+        <option value="money">Money &amp; property</option>
+        <option value="unconfirmed">Unconfirmed</option>
+        <option value="platinum">Platinum path</option>
+      </select>
+    </label>
+    <label class="field">Grade
+      <select id="grade">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label class="check"><input id="earned-only" type="checkbox"> Earned only</label>
+    <label class="check"><input id="spoilers" type="checkbox" checked> Hide story spoilers</label>
+    <button id="export" type="button">Export progress</button>
+    <label class="import-btn">Import progress
+      <input id="import" type="file" accept="application/json,.json">
+    </label>
+    <button id="reset" type="button">Reset progress</button>
+  </section>
+
+  <p class="result-count" id="result-count" aria-live="polite"></p>
+
+  <section class="trophies" aria-label="Trophy checklist">
+    <h2>Trophy checklist</h2>
+    <p class="section-note">Names, descriptions and grades are PlayStation's official text, as listed by Exophase and PSNProfiles. Hidden trophies stay masked while spoiler-hiding is on, until you earn them. Select a trophy to open its guide and sources.</p>
+    <div class="list" id="list"></div>
+  </section>
+
+  <section class="roadmap" id="roadmap" aria-label="Roadmap to the Platinum">
+    <h2>Roadmap to the Platinum</h2>
+    <p class="section-note">Six stages, in order. Built from the official descriptions: story chapters and missions first, then side characters, activities, collectibles, crime and money, and the 100% cleanup last. The one possibly missable trophy is flagged in stage 1.</p>
+    <ol class="stages" id="stages"></ol>
+  </section>
+
+  <section class="notes" aria-label="Run notes">
+    <h2>Before you start</h2>
+    <ul id="run-notes"></ul>
+  </section>
+
+  <section class="sources" aria-label="Sources">
+    <h2>Sources</h2>
+    <p class="section-note">Every guide names where its facts come from. Official names, descriptions and grades come from the PlayStation list as published on Exophase and PSNProfiles; specific locations and steps are credited to the guide that reported them. Nothing here is copied from another guide — the words are our own.</p>
+    <ul id="source-list"></ul>
+  </section>
+</main>
+
+<footer>
+  <p>Leonida 100% — an unofficial fan guide. Grand Theft Auto and GTA are trademarks of Rockstar Games; no Rockstar logo, artwork or game screenshot is used here. Works fully offline: all files live under this folder.</p>
+</footer>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
