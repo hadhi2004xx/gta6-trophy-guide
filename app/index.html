@@ -10,39 +10,45 @@
 <header class="masthead">
   <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; Offline guide &amp; tracker</p>
   <h1>Leonida 100% — GTA VI Trophy Guide &amp; Tracker</h1>
-  <p class="lede">Every one of the 55 official trophies, with its official name, description and grade, a guide in our own words with cited sources, and a roadmap to the Platinum. Tick a trophy off and it stays ticked in this browser. No network needed.</p>
+  <p class="lede">All 55 official trophies — official names, descriptions and grades, a cited guide for each, and a roadmap to the Platinum. Tick one off and it stays ticked in this browser. No network needed.</p>
   <dl class="audit" id="audit" aria-label="List audit">
     <div><dt>Trophies</dt><dd id="audit-total">55</dd></div>
-    <div><dt>Platinum</dt><dd id="audit-platinum">1</dd></div>
-    <div><dt>Gold</dt><dd id="audit-gold">2</dd></div>
-    <div><dt>Silver</dt><dd id="audit-silver">6</dd></div>
-    <div><dt>Bronze</dt><dd id="audit-bronze">46</dd></div>
+    <div><dt>Grades</dt><dd id="audit-grades">1&middot;2&middot;6&middot;46</dd></div>
     <div><dt>Hidden</dt><dd id="audit-hidden">28</dd></div>
     <div><dt>Missable</dt><dd id="audit-missable">1</dd></div>
+    <div><dt>Do early</dt><dd id="audit-doearly">3</dd></div>
     <div><dt>Online</dt><dd id="audit-online">0</dd></div>
   </dl>
   <div class="progress" role="status" aria-live="polite">
-    <div class="progress-bar"><span id="progress-fill"></span></div>
-    <p id="progress-text">0 of 55 earned &middot; 0%</p>
+    <svg class="ring" id="progress-ring" viewBox="0 0 72 72" width="72" height="72" aria-hidden="true">
+      <circle class="ring-track" cx="36" cy="36" r="30"></circle>
+      <circle class="ring-fill" id="ring-fill" cx="36" cy="36" r="30"></circle>
+    </svg>
+    <div class="progress-body">
+      <p class="progress-pct" id="progress-pct">0%</p>
+      <div class="progress-bar"><span id="progress-fill"></span></div>
+      <p id="progress-text">0 of 55 earned &middot; 55 to go</p>
+    </div>
+    <p class="progress-note">Platinum: ~200 hours &middot; 5 chapters &middot; 1 playthrough &middot; 0 online</p>
   </div>
 </header>
 
 <main>
   <section class="controls" aria-label="Tracker controls">
     <label class="field search-field">Search
-      <input id="search" type="search" placeholder="Name, mission or keyword…" autocomplete="off">
+      <input id="search" type="search" placeholder="Name, mission or keyword&hellip;" autocomplete="off">
     </label>
     <label class="field">Kind
       <select id="kind">
         <option value="all">All kinds</option>
         <option value="story">Story</option>
         <option value="missable">Missable</option>
+        <option value="do-early">Do early</option>
         <option value="collectibles">Collectibles</option>
         <option value="activities">Activities</option>
         <option value="crime">Crime &amp; robbery</option>
         <option value="exploration">Exploration</option>
         <option value="money">Money &amp; property</option>
-        <option value="unconfirmed">Unconfirmed</option>
         <option value="platinum">Platinum path</option>
       </select>
     </label>
@@ -66,16 +72,31 @@
 
   <p class="result-count" id="result-count" aria-live="polite"></p>
 
+  <section class="featured" aria-label="Start here">
+    <h2>Start here — the eight that shape the run</h2>
+    <p class="section-note">The missable one, the Platinum, the first mission, the 100% gate, and the four biggest grinds. Select any trophy to open its guide and sources.</p>
+    <div class="list featured-list" id="featured-list"></div>
+  </section>
+
   <section class="trophies" aria-label="Trophy checklist">
-    <h2>Trophy checklist</h2>
-    <p class="section-note">Names, descriptions and grades are PlayStation's official text, as listed by Exophase and PSNProfiles. Hidden trophies stay masked while spoiler-hiding is on, until you earn them. Select a trophy to open its guide and sources.</p>
+    <h2>Trophy checklist — all 55</h2>
+    <p class="section-note">Names, descriptions and grades are PlayStation&rsquo;s official text, as listed by Exophase and PSNProfiles. Hidden trophies stay masked while spoiler-hiding is on, until you earn them. Select a trophy to open its guide and sources.</p>
     <div class="list" id="list"></div>
   </section>
 
   <section class="roadmap" id="roadmap" aria-label="Roadmap to the Platinum">
     <h2>Roadmap to the Platinum</h2>
-    <p class="section-note">Six stages, in order. Built from the official descriptions: story chapters and missions first, then side characters, activities, collectibles, crime and money, and the 100% cleanup last. The one possibly missable trophy is flagged in stage 1.</p>
+    <p class="section-note">Six stages, in order, from the official descriptions and PowerPyx&rsquo;s launch roadmap.</p>
     <ol class="stages" id="stages"></ol>
+    <div class="audit-panel" id="missable-audit">
+      <h3>Missable audit — why the count is 1, not 10</h3>
+      <p>Every trophy was checked against its official description and the launch guides. Only <strong>Positive Mental Attitude</strong> can be lost for good: Lucia&rsquo;s Chapter 1 balcony meditation never comes back. The candidates that look missable are not: Kenton vanishes for a chapter but returns (call Brian as Jason in Chapter 2 to speed it up); Andy, Billy, Randy, Tyrone and Bret all stay available in free-roam after the story; the 8 Strangers &amp; Freaks strands persist; Kingpin Bowling&rsquo;s robbery icon respawns if you miss a valuable; and optional missions that disappear never block a trophy or the 100% checklist. Sources: PowerPyx, GTABase, EGamers.</p>
+    </div>
+    <div class="doearly" aria-label="Do these early">
+      <h3>Do these early — the only time-gated steps</h3>
+      <p class="section-note">PowerPyx&rsquo;s launch guide lists exactly <strong>one</strong> potentially missable trophy. Three more steps are gated behind story chapters, so do them when they appear. Everything else can be cleaned up in free-roam after the story.</p>
+      <div class="doearly-grid" id="doearly-grid"></div>
+    </div>
   </section>
 
   <section class="notes" aria-label="Run notes">
@@ -85,7 +106,7 @@
 
   <section class="sources" aria-label="Sources">
     <h2>Sources</h2>
-    <p class="section-note">Every guide names where its facts come from. Official names, descriptions and grades come from the PlayStation list as published on Exophase and PSNProfiles; specific locations and steps are credited to the guide that reported them. Nothing here is copied from another guide — the words are our own.</p>
+    <p class="section-note">Every guide names where its facts come from. Official names, descriptions and grades come from the PlayStation list as published on Exophase and PSNProfiles; specific locations, counts and steps are credited to the guide that reported them — most of them to PowerPyx&rsquo;s full launch guide, read on 20 Nov 2026. Nothing here is copied from another guide — the words are our own.</p>
     <ul id="source-list"></ul>
   </section>
 </main>

@@ -1,7 +1,7 @@
 {
  "game": "Grand Theft Auto VI",
  "platform": "PlayStation 5",
- "list": "the official 55 trophies, 2026-11-18",
+ "list": "the official 55 trophies, 2026-11-20",
  "audit": {
   "total": 55,
   "platinum": 1,
@@ -12,35 +12,168 @@
   "visible": 27,
   "online": 0,
   "missable": 1,
+  "doEarly": 3,
+  "chapters": 5,
+  "storyMissions": "91-93",
   "roadmapStages": 6,
   "platinumTimeHours": 200,
   "completionChecklistTasks": 35
  },
  "sources": {
-  "exophase": { "name": "Exophase — GTA VI trophy list (official list as published)", "url": null },
-  "psnprofiles": { "name": "PSNProfiles — GTA VI trophy list", "url": null },
-  "gtabase": { "name": "GTABase — GTA 6 Trophy & Achievement Guide", "url": "https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series" },
-  "powerpyx": { "name": "PowerPyx — GTA 6 trophy guide (as summarised by EGamers, 18 Nov 2026)", "url": null },
-  "egamers": { "name": "EGamers — GTA 6 Trophy List: All 55 Trophies and Achievements", "url": "https://egamers.io/gta-6-trophy-list-all-55-trophies-and-achievements-plus-the-hardest-ones/" },
-  "outputlag": { "name": "Output Lag — GTA 6 Trophy List", "url": "https://outputlag.com/guides/gta-6-trophy-list/" },
-  "gtavicecityhub": { "name": "GTA Vice City Hub — GTA 6 Achievements", "url": "https://www.gtavicecityhub.com/achievements" },
-  "ggrecon": { "name": "GGRecon — GTA 6's trophy list is out, and the Platinum needs 100%", "url": "https://www.ggrecon.com/articles/gta-6-trophies-achievements-list-platinum/" },
-  "techwiser": { "name": "TechWiser — GTA 6 trophy list (as cited by EGamers)", "url": null }
+  "exophase": {
+   "name": "Exophase — GTA VI trophy list (official list as published)",
+   "url": null
+  },
+  "psnprofiles": {
+   "name": "PSNProfiles — GTA VI trophy list",
+   "url": null
+  },
+  "gtabase": {
+   "name": "GTABase — GTA 6 Trophy & Achievement Guide",
+   "url": "https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series"
+  },
+  "powerpyx": {
+   "name": "PowerPyx — GTA 6 Trophy Guide & Roadmap (full launch guide, read 20 Nov 2026)",
+   "url": "https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/"
+  },
+  "egamers": {
+   "name": "EGamers — GTA 6 Trophy List: All 55 Trophies and Achievements",
+   "url": "https://egamers.io/gta-6-trophy-list-all-55-trophies-and-achievements-plus-the-hardest-ones/"
+  },
+  "outputlag": {
+   "name": "Output Lag — GTA 6 Trophy List",
+   "url": "https://outputlag.com/guides/gta-6-trophy-list/"
+  },
+  "gtavicecityhub": {
+   "name": "GTA Vice City Hub — GTA 6 Achievements",
+   "url": "https://www.gtavicecityhub.com/achievements"
+  },
+  "ggrecon": {
+   "name": "GGRecon — GTA 6's trophy list is out, and the Platinum needs 100%",
+   "url": "https://www.ggrecon.com/articles/gta-6-trophies-achievements-list-platinum/"
+  },
+  "techwiser": {
+   "name": "TechWiser — GTA 6 trophy list (as cited by EGamers)",
+   "url": null
+  },
+  "cryptogames": {
+   "name": "CryptoGames — GTA 6 Trophies and Achievements: Full List and Hard Ones",
+   "url": "https://cryptogames.gg/gta-6-trophies-achievements-full-list/"
+  }
  },
  "notes": [
-  "No trophy needs online play: all 55 are single-player (GTABase, GGRecon).",
-  "There is no mission replay and no New Game Plus, so keep a manual save at the start of every chapter and one before the final mission (Output Lag). The game offers 15 manual save slots.",
-  "Cheats disable trophies and saving, so leave cheats off on a trophy run (GTABase, TechWiser).",
-  "PowerPyx and GTABase put the Platinum at roughly 200 hours: 60-80 hours of story, about 100 hours of checklist work and about 10 hours of cleanup.",
-  "The 100% completion checklist (Progress > Stats > 100% Completion) has 35 tasks and appears after the story; progress made before it appears still counts, and nothing on it is missable (GTABase)."
+  "No trophy needs online play: all 55 are single-player (PowerPyx, GTABase, GGRecon).",
+  "There is no mission replay and no New Game Plus, so keep a manual save at the start of every chapter and one before the final mission. PowerPyx recommends 10 saves across the story from the 15 manual save slots.",
+  "Cheats disable trophies and saving, so leave cheats off on a trophy run (PowerPyx, GTABase, TechWiser).",
+  "PowerPyx puts the Platinum at roughly 200 hours and difficulty 4/10: 60-80 hours of story, about 100 hours of checklist work and about 10 hours of cleanup. One playthrough is enough.",
+  "The 100% completion checklist (Progress > Stats > 100% Completion) has 35 tasks and appears after the story; progress made before it appears still counts, and nothing on it is missable (PowerPyx, GTABase). It is lenient — closer to 60% true completion: only 70 of 80 challenges, 200 of 277 base-model vehicles, 100 of 255 animals and 15 of 18 meditations.",
+  "The story runs 5 chapters and roughly 91-93 missions (PowerPyx, CryptoGames). Chapter trophies can pop at the start of the next chapter rather than on the final cutscene.",
+  "Only one trophy is potentially missable — Positive Mental Attitude (PowerPyx, GTABase). The roadmap's Missable audit lists the candidates that were checked and cleared, with the source for each."
  ],
  "roadmap": [
-  { "stage": 1, "title": "Play the story — Chapters 1-4", "trophies": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 28], "note": "All story trophies pop as you play; chapter trophies can pop at the start of the next chapter. Do Lucia's Chapter 1 balcony meditation before Chapter 1 ends — it is the one possibly missable trophy." },
-  { "stage": 2, "title": "Side characters & strangers", "trophies": [22, 23, 24, 25, 26, 27, 29], "note": "Finish the final mission of each side character's strand and complete 8 stranger strands. Start every stranger chain as soon as it unlocks — TechWiser reports their windows are tied to story progress." },
-  { "stage": 3, "title": "Activities & skills", "trophies": [15, 16, 17, 18, 19, 20, 21, 32, 36, 44, 46, 47, 48, 51], "note": "Races, stunts, shooting range, fishing, arcade, bowling and challenges. Most of these count double toward the 100% checklist." },
-  { "stage": 4, "title": "Collectibles & exploration", "trophies": [30, 31, 35, 42], "note": "Card sets, WAiNK locations, vehicle discovery and clearing the map fog across Leonida." },
-  { "stage": 5, "title": "Crime, money & property", "trophies": [33, 34, 37, 38, 39, 40, 41, 43, 45, 52, 53, 54, 55], "note": "Robberies, vaults, gang operations, laundering Marked Bills, spending, garages and the Scooter Bros app." },
-  { "stage": 6, "title": "Cleanup to 100% & the Platinum", "trophies": [49, 50, 14, 1], "note": "Revisit the five unconfirmed trophies, finish the 35-task 100% checklist for A Long Road, and Vice Got a Price! pops last." }
+  {
+   "stage": 1,
+   "title": "Play the story — Chapters 1-5",
+   "chapters": "Ch. 1-5 · 5 chapters",
+   "trophies": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    28
+   ],
+   "note": "Story trophies pop as you play — do Lucia's Ch.1 balcony meditation first."
+  },
+  {
+   "stage": 2,
+   "title": "Side characters & strangers",
+   "chapters": "Unlocks Ch. 1-3 · free-roam after",
+   "trophies": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    29
+   ],
+   "note": "Five side-character strands, Bret's hunts, 8 stranger strands — all stay after the story."
+  },
+  {
+   "stage": 3,
+   "title": "Activities & skills",
+   "chapters": "Unlocks Ch. 1-3 · free-roam",
+   "trophies": [
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    32,
+    36,
+    44,
+    46,
+    47,
+    48,
+    51
+   ],
+   "note": "Races, stunts, ranges, fishing, arcade, bowling, challenges."
+  },
+  {
+   "stage": 4,
+   "title": "Collectibles & exploration",
+   "chapters": "Free-roam · from Ch. 1",
+   "trophies": [
+    30,
+    31,
+    35,
+    42
+   ],
+   "note": "Card sets, WAiNK spots, vehicles, map fog."
+  },
+  {
+   "stage": 5,
+   "title": "Crime, money & property",
+   "chapters": "Unlocks Ch. 2-4 · free-roam",
+   "trophies": [
+    33,
+    34,
+    37,
+    38,
+    39,
+    40,
+    41,
+    43,
+    45,
+    52,
+    53,
+    54,
+    55
+   ],
+   "note": "Robberies, vaults, gangs, Marked Bills, spending, garages, Scooter Bros."
+  },
+  {
+   "stage": 6,
+   "title": "Cleanup to 100% & the Platinum",
+   "chapters": "After the story · free-roam",
+   "trophies": [
+    49,
+    50,
+    14,
+    1
+   ],
+   "note": "Two leads PowerPyx still lists as unconfirmed, then the 35-task 100% checklist. Platinum pops last."
+  }
  ],
  "trophies": [
   {
@@ -51,11 +184,18 @@
    "hidden": false,
    "kind": "platinum",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 6,
-   "guide": "The last trophy you earn: it pops the moment the other 54 are done, so there is nothing to do for it directly. Follow the roadmap in order, finish A Long Road (100% completion) last, and this follows automatically.",
-   "sources": ["exophase", "psnprofiles"]
+   "guide": "The last trophy you earn: it pops the moment the other 54 are done, so there is nothing to do for it directly. PowerPyx confirms no multiplayer and no DLC is required. Follow the roadmap in order, finish A Long Road (100% completion) last, and this follows automatically.",
+   "sources": [
+    "exophase",
+    "psnprofiles",
+    "powerpyx"
+   ]
   },
   {
    "id": 2,
@@ -65,11 +205,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Play the opening mission, Gone Fishing. It is the first story mission and cannot be missed; the trophy pops when the mission ends.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Play the opening mission, Gone Fishing — the first story mission of Chapter 1, with Cal and Donnie (PowerPyx). It is the first mission and cannot be missed; the trophy pops when the mission ends.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 3,
@@ -79,11 +226,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Finish Chapter 1 by playing its story missions to the end. Chapter trophies can pop at the start of the next chapter rather than on the final cutscene, so do not worry if it does not fire immediately (Output Lag).",
-   "sources": ["exophase", "outputlag"]
+   "guide": "Finish Chapter 1 by playing its story missions to the end. PowerPyx notes it pops after the first main mission of Chapter 2, 'What's in the Bag?', rather than on the final Chapter 1 cutscene — so do not worry if it does not fire immediately (Output Lag).",
+   "sources": [
+    "exophase",
+    "outputlag",
+    "powerpyx"
+   ]
   },
   {
    "id": 4,
@@ -93,11 +247,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Finish Chapter 2. From this chapter on, Jason and Lucia are both playable, which opens up most of the free-roam trophies (Output Lag). Keep playing the story missions in order.",
-   "sources": ["exophase", "outputlag"]
+   "guide": "Finish Chapter 2. From this chapter on, Jason and Lucia are both playable, which opens up most of the free-roam trophies (Output Lag). PowerPyx notes it pops after the first main mission of Chapter 3, 'Welcome to Vice City'. Keep playing the story missions in order.",
+   "sources": [
+    "exophase",
+    "outputlag",
+    "powerpyx"
+   ]
   },
   {
    "id": 5,
@@ -107,11 +268,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Finish Chapter 3. Robbery trophies start unlocking in Chapters 3 and 4, so use the free roam between story missions to practise the crime trophies (Output Lag).",
-   "sources": ["exophase", "outputlag"]
+   "guide": "Finish Chapter 3. Robbery trophies start unlocking in Chapters 3 and 4, so use the free roam between story missions to practise the crime trophies (Output Lag). PowerPyx notes it pops after the first two main missions of Chapter 4, 'Ocean Beach' and 'Another Life'.",
+   "sources": [
+    "exophase",
+    "outputlag",
+    "powerpyx"
+   ]
   },
   {
    "id": 6,
@@ -121,11 +289,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Finish Chapter 4. The optional Chapter 4 mission 'That's Where The Money Is...' unlocks the bank-vault robberies for Maximum Withdrawal, so take it when it appears (GTABase via EGamers).",
-   "sources": ["exophase", "egamers"]
+   "guide": "Finish Chapter 4. PowerPyx notes it pops after the final main mission of Chapter 4, 'Starting From Zero'. The optional Chapter 4 mission 'That's Where The Money Is...' unlocks the bank-vault robberies for Maximum Withdrawal, so take it when it appears (GTABase via EGamers, PowerPyx).",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 7,
@@ -135,11 +310,19 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Finish the final mission of the story. Some lists word it as Chapter 5 (Beebom and CULTR, via EGamers); either way it is the story finale. Keep a manual save before the final mission — there is no mission replay, and the endgame is the best time to start the cleanup stages.",
-   "sources": ["exophase", "egamers", "outputlag"]
+   "guide": "Finish the final mission of the story, 'Starting From Zero' in Chapter 4 (PowerPyx). Keep a manual save before the final mission — there is no mission replay, and the endgame is the best time to start the cleanup stages.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "outputlag",
+    "powerpyx"
+   ]
   },
   {
    "id": 8,
@@ -149,11 +332,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Complete the story mission Breakfast Run. It pops as you play the story; no extra step is needed beyond finishing the mission.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete the story mission Breakfast Run in Chapter 2 (PowerPyx). It pops as you play the story; no extra step is needed beyond finishing the mission.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 9,
@@ -163,11 +353,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Complete the story mission The Cartel Heist. A story trophy: finish the mission and it pops.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete the story mission The Cartel Heist in Chapter 3 (PowerPyx). A story trophy: finish the mission and it pops.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 10,
@@ -177,11 +374,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Complete the story mission Child's Play. A story trophy: finish the mission and it pops.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete the story mission Child's Play in Chapter 4 (PowerPyx). A story trophy: finish the mission and it pops.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 11,
@@ -191,11 +395,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Complete the story mission Headliners. A story trophy: finish the mission and it pops.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete the story mission Headliners in Chapter 4 (PowerPyx). A story trophy: finish the mission and it pops.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 12,
@@ -205,11 +416,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Complete the story mission VCIA Takedown. A story trophy: finish the mission and it pops. The VCIA airport area matters again for Catch Me If You Can.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete the story mission VCIA Takedown in Chapter 4 (PowerPyx). A story trophy: finish the mission and it pops. The VCIA airport area matters again for Catch Me If You Can.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 13,
@@ -219,11 +437,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 1,
-   "guide": "Complete the story mission Operation Savage Glory. A story trophy: finish the mission and it pops.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete the story mission Operation Savage Glory in Chapter 5 (PowerPyx). A story trophy: finish the mission and it pops.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 14,
@@ -233,11 +458,20 @@
    "hidden": false,
    "kind": "platinum",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 6,
-   "guide": "Reach 100% completion on the in-game checklist (Progress > Stats > 100% Completion), which appears after the story. The checklist has 35 tasks (GTA Vice City Hub). PowerPyx, via EGamers, calls the thresholds lenient — roughly 60% of true completion — and GTABase notes nothing on the checklist is missable and earlier progress already counts. It is the hardest trophy and the last one before the Platinum.",
-   "sources": ["exophase", "egamers", "gtabase", "gtavicecityhub"]
+   "guide": "Reach 100% completion on the in-game checklist (Progress > Stats > 100% Completion), which appears after the story. PowerPyx calls the requirements very lenient — closer to 60% true completion: only 70 of 80 challenges, 200 of 277 base-model vehicles, 100 of 255 animals, 15 of 18 meditations and any 100 optional missions. The tasks that require everything are robberies, underwater discoveries, shooting ranges, drone races and Bret's quests. Nothing on the checklist is missable and earlier progress already counts (PowerPyx, GTABase). It is the hardest trophy and the last one before the Platinum.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "gtabase",
+    "gtavicecityhub",
+    "powerpyx"
+   ]
   },
   {
    "id": 15,
@@ -247,11 +481,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 250,
    "countUnit": "stunts",
    "stage": 3,
-   "guide": "Land any 250 stunts. GTABase, via EGamers, counts 397 stunts in the game and says flying under bridges is the quickest kind. The 100% checklist wants 300, so keep going past the trophy — the extra 50 count toward A Long Road.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Land any 250 stunts. PowerPyx counts 397 in the game across 4 kinds: 130 stunt jumps, 202 under-the-bridge flights, 40 knife flights and 25 base jumps — flying under bridges is the quickest kind. Track them by region under Progress > Activities > Stunts, or on the map under Exploration > Stunt Spots. The 100% checklist wants 300, so keep going past the trophy — the extra 50 count toward A Long Road.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 16,
@@ -261,11 +502,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 9,
    "countUnit": "activity types",
    "stage": 3,
-   "guide": "Try each of the 9 activity types once (GGRecon). One attempt at each is enough — do it early while you are learning the map, and the trophy pops on the ninth type.",
-   "sources": ["exophase", "ggrecon"]
+   "guide": "Try each of the 9 activity types once (PowerPyx): fishing, hunting, golf, shooting ranges, pool, basketball, playing a video game, winning a car race / race challenge / Top Fun drone race, and performing a stunt. View them under Touchpad > Progress > Activities; one attempt at each is enough, and most come automatically while working on the other trophies.",
+   "sources": [
+    "exophase",
+    "ggrecon",
+    "powerpyx"
+   ]
   },
   {
    "id": 17,
@@ -275,11 +523,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 42,
    "countUnit": "Shooting Range challenges",
    "stage": 3,
-   "guide": "Earn a gold medal in all 42 Shooting Range challenges. Work through them range by range; EGamers links a guide covering all 42 with tips. The 100% checklist also wants all 42 golds, so this trophy and the checklist move together.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Earn a gold medal in all 42 Shooting Range challenges across the 12 range locations (PowerPyx). Work through them range by range; the 100% checklist also wants all 42 golds, so this trophy and the checklist move together. Shooting-range practice also raises your Focus level, which helps Gunslinger.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 18,
@@ -289,11 +544,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 14,
    "countUnit": "drone race locations",
    "stage": 3,
-   "guide": "Win a Top Fun drone race at each of the 14 locations. PowerPyx, via EGamers, counts 42 races across those 14 locations — one win per location is enough for the trophy.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Win a Top Fun drone race at each of the 14 locations — 42 races in total across them (PowerPyx). One win per location is enough for the trophy, but the 100% checklist wants the drone races in full, so keep racing past it.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 19,
@@ -303,11 +565,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 20,
    "countUnit": "different races",
    "stage": 3,
-   "guide": "Win 20 different races — any race type counts, but each race only counts once. The 100% checklist wants 30 wins, so keep racing past the trophy toward A Long Road.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Win 20 different races — any race type counts, but each race only counts once. PowerPyx counts 40 unique race locations, so there is plenty of choice. The 100% checklist wants 30 wins, so keep racing past the trophy toward A Long Road.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 20,
@@ -317,13 +586,19 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 3,
-   "guide": "Beat Cal in a fishing challenge. Find Cal's fishing challenge and out-fish him — the trophy is about the head-to-head result, not the size of any single catch.",
-   "sources": ["exophase", "gtabase"]
-  }
-,
+   "guide": "Beat Cal in a fishing challenge. PowerPyx: after the Chapter 1 mission 'Feng Shui (Meet Cal)', Cal texts you a fishing location marked with a purple icon on the map — follow his fishing questline to unlock the challenge, then out-fish him. The trophy is about the head-to-head result, not the size of any single catch.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
+  },
   {
    "id": 21,
    "name": "Stick Fiddler",
@@ -332,11 +607,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 3,
-   "guide": "Complete one arcade game, start to finish. Pick the shortest game in an arcade and play it through — a single full completion is all it asks.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Complete one arcade game, start to finish. PowerPyx: there are 4 video games — Tenebrae Lux, Street Trash III and Time Jackers Rewind, playable on the TV at home from Chapter 1, and Bang For Your Buck at arcade machines around the world. Finish all levels of any one game once; you do not need to beat every challenge. Pick the shortest and play it through.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 22,
@@ -346,11 +628,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 2,
-   "guide": "Complete the final mission of Andy's strand. Side-character strands unlock as the story progresses; play Andy's missions to the end. TechWiser, via EGamers, warns stranger chains have windows tied to story progress, so start the chain as soon as it unlocks rather than leaving it for the endgame.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete the final mission of Andy's strand. PowerPyx: the questline is Lucia-only and gets marked automatically in Chapter 3 — Andy calls Lucia, then texts her home address in Belville. Her 5 quests are Climbing the Cellerichain (parts 1-3), Pay the Cellerica Fee, Peach!, Read the Label and Puff Puff Pass. All quests stay available after the story, so nothing here can be missed.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 23,
@@ -360,11 +649,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 2,
-   "guide": "Complete the final mission of Kenton's strand. Play Kenton's missions to the end, starting the chain as soon as it unlocks (see the TechWiser window warning on Road to Rehabilitation).",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete the final mission of Kenton's strand. PowerPyx: the questline is marked automatically in Chapter 1, after the mission 'Island Dreams (Work for Kenton)' — he calls, then shows as a green KR icon in Key Lento. He sends you treasure-diving to 7 shipwrecks; use the metal detector to dig treasure from the ocean floor and bring it back. Track it under Progress > Characters > Kenton Rees. Kenton goes temporarily unavailable after Chapter 1 but returns in Chapters 2-3 (calling Brian as Jason speeds it up), so he is not missable.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 24,
@@ -374,11 +670,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 2,
-   "guide": "Complete the final mission of Billy's strand. Play Billy's missions to the end, starting the chain as soon as it unlocks.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete the final mission of Billy's strand. PowerPyx: the questline is marked automatically after the Chapter 2 mission 'Coffee Break', at the Thrillbilly Mudclub in Kelly County. His 5 quests are Thrillbillies, Twist Wrist Smash Grab, Mall Rats, The Impaler and Hometown Heroes. All his quests stay available after the story.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 25,
@@ -388,11 +691,19 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 8,
    "countUnit": "stranger strands",
    "stage": 2,
-   "guide": "Complete 8 mission strands for strangers across Leonida. Stranger missions appear as you explore; start each chain as soon as it unlocks, because TechWiser reports their windows are tied to story progress. The five side-character final missions (Andy, Kenton, Billy, Randy, Tyrone) are their own trophies and count toward your familiarity with the system, but this trophy is about the stranger strands themselves.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete 8 mission strands for strangers across Leonida. PowerPyx warns only certain questlines count: Kirk (Skunk Ape), Kyle, Yago and Pilot Pete are confirmed, while Moses, Tyrone, Yasmani, Andy, Billy and Eddie do not count as strangers. The strands stay available after the story in free-roam, and the trophy tracker in the trophy list shows how many you have done. CryptoGames counts 32 stranger quests in total.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx",
+    "cryptogames"
+   ]
   },
   {
    "id": 26,
@@ -402,11 +713,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 2,
-   "guide": "Complete the final mission of Randy's strand. Play Randy's missions to the end, starting the chain as soon as it unlocks.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete the final mission of Randy's strand. PowerPyx: 'Randy's Wish List' is marked automatically after the Chapter 3 mission 'Clonin' Keys, Makin' GS', where you unlock the Key Cloner and deliver a Zorrusso to Randy. He then wants 16 sports cars, delivered to his garage (green RK icon, west Vice City); track them under Map > Robberies > Randy's Wish List. Scan high-end cars with WAiNK to check them against the list, and deliver in good condition for more money. It can still be done after the story.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 27,
@@ -416,11 +734,18 @@
    "hidden": true,
    "kind": "story",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 2,
-   "guide": "Complete the final mission of Tyrone's strand. Play Tyrone's missions to the end, starting the chain as soon as it unlocks.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete the final mission of Tyrone's strand. PowerPyx: the questline is Jason-only and gets marked automatically after the Chapter 3 mission 'Here, Kitty Kitty' — purple markers point at Synthetic Labs in Vice City. Destroy enough labs in 'Take Out Kitty Litter', then Tyrone gives the second quest 'Spin On This'. All of it stays available after the story.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 28,
@@ -430,11 +755,19 @@
    "hidden": false,
    "kind": "missable",
    "missable": true,
+   "timeSensitive": false,
+   "missableReason": "The first meditation — Lucia on the balcony at Jason's house — happens only in Chapter 1 and never comes back. After the Chapter 1 mission 'Down to Earth', talk to Lucia in the kitchen in the morning; she walks to the balcony, and choosing 'Accept' teaches you to meditate. PowerPyx earned the trophy after doing it, and GTABase flags it too. It is unconfirmed whether this one session is strictly required — the other 18 spots are not marked the same way — so do it in Chapter 1 to be safe.",
+   "timeSensitiveReason": null,
    "count": 18,
    "countUnit": "meditation spots",
    "stage": 1,
-   "guide": "Meditate at every spot across Leonida — 18 spots per GTABase. Warning: the first meditation is Lucia's on the balcony at Jason's house in Chapter 1, and GTABase and PowerPyx both report it disappears once that chapter ends. Whether that first spot is strictly required is unconfirmed, so do it in Chapter 1 to be safe. Note the sources disagree on the total: the 100% checklist counts 15 spots, GTABase counts 18 — do all 18 and both counts are covered. There is no mission replay, so keep a manual save at the start of every chapter.",
-   "sources": ["exophase", "egamers", "gtabase", "powerpyx"]
+   "guide": "Meditate at every spot across Leonida — 18 spots across 10 locations (PowerPyx). Meditating with both Jason and Lucia at the same spot counts as +2, and you can track them under Progress > Collections > Exploration > Meditations. The final meditation needs both characters playable, which unlocks after the Chapter 2 mission 'Coffee Break'. The sources disagree on the total — the 100% checklist counts 15 spots, PowerPyx and GTABase count 18 — so do all 18 and both counts are covered. There is no mission replay, so keep a manual save at the start of every chapter.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 29,
@@ -444,11 +777,18 @@
    "hidden": true,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 2,
-   "guide": "Hunt a unique animal for Bret. Which animal it is was still unconfirmed at launch (EGamers) — follow Bret's strand and take the hunt it offers; the trophy pops on the unique-animal kill, not on ordinary hunting.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Hunt a unique animal for Bret. PowerPyx: Bret Vogel's questline is Jason-only and gets marked after the Chapter 2 mission 'Coffee Break' — a text from Bret marks 'Veteran Hunted (Meet Bret)' in Lummox County. His quests are about hunting animals he requests and bringing them to him; on the first quest he gives you the unique hunting rifle 'Killtelligence SM-69', retrievable from any Ammu-Nation weapon locker. Track the hunts under Map > Activities > Target Deck. Which animal exactly unlocks the trophy is still being confirmed, but all 15 Target Decks are needed for the 100% checklist, so the trophy should come naturally along the way.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 30,
@@ -458,11 +798,18 @@
    "hidden": false,
    "kind": "collectibles",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 3,
    "countUnit": "card sets",
    "stage": 4,
-   "guide": "Complete any 3 collectible card sets. Fifteen sets exist in total and the 100% checklist wants all 15, so treat the trophy as the first three — EGamers links a card guide with set locations. Keep collecting past the trophy toward A Long Road.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete any 3 collectible card sets. PowerPyx counts 18 card sets in total, so treat the trophy as the first three and keep collecting — EGamers links a card guide with set locations. PowerPyx's 100% checklist does not require every set, so stop once the trophy and the checklist are both done.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 31,
@@ -472,11 +819,18 @@
    "hidden": false,
    "kind": "collectibles",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 100,
    "countUnit": "WAiNK locations",
    "stage": 4,
-   "guide": "WAiNK It at 100 locations. Use the WAiNK phone feature at marked spots across Leonida; the 100% checklist also wants 100, so the trophy and the checklist finish together.",
-   "sources": ["exophase", "egamers"]
+   "guide": "WAiNK It at 100 locations. PowerPyx: hold up on the D-pad and R1 to scan objects in the world — there are more than 100, split across 31 landmarks, 35 curiosities, 23 sculptures and No Flusher tags, so it does not matter which 100 you scan. Pair it with vehicle discovery on the same walks and flights.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 32,
@@ -486,11 +840,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 50,
    "countUnit": "challenges",
    "stage": 3,
-   "guide": "Complete 50 challenges. Challenges are the small objectives scattered across activities and free roam; the 100% checklist wants 70, so keep going past the trophy.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Complete 50 challenges. PowerPyx: there are 80 challenges and you only need 50 for this trophy — the 100% checklist wants any 70 of 80, so the trophy unlocks automatically along the way and you can skip the 10 hardest. Track them under Progress > Challenges; most complete naturally while working on the other trophies, so leave the leftovers for last and pick the easiest ones.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 33,
@@ -500,11 +861,18 @@
    "hidden": false,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 5,
-   "guide": "Reach a 4-star wanted level with your partner, then escape the red heat zone. GTABase, via EGamers, points to a train tunnel north of Ambrosia as a good escape route, and notes bank-vault robberies often bring the wanted level you need. Both characters must be together when you lose the heat.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Reach a 4-star wanted level with your partner, then escape the red heat zone. PowerPyx: the earliest it can be done is after the Chapter 2 mission 'Coffee Break', when you can free-roam together — call your partner by holding right on the D-pad and pressing Triangle. Cause carnage to 4 stars, then take a fast sports motorcycle through traffic; the train tunnel north of Ambrosia (Kelly County) is the easiest escape, since cops struggle on the tracks and the helicopter cannot see you. The trophy pops after you drive out of the red heat zone. It also comes automatically during the Chapter 4 optional mission 'That's Where The Money Is...', since vault robberies always trigger 4 stars.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 34,
@@ -514,11 +882,18 @@
    "hidden": false,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 3,
    "countUnit": "shops back-to-back",
    "stage": 5,
-   "guide": "Rob 3 shops back-to-back with your partner without losing your wanted level — stay wanted the whole time, and do not let the heat drop between robberies. GTABase, via EGamers, notes North Vice City's jewelry stores sit close together; if the trophy does not pop after the third, rob a fourth.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Rob 3 shops back-to-back with your partner without losing your wanted level — stay wanted the whole time, and do not let the heat drop between robberies. PowerPyx: only possible after the Chapter 2 mission 'Coffee Break', when both characters can be together. Hit 3 robbery targets (green map icons) while chased, keeping the red/blue flashing wanted level — not the red heat level. The 3 jewelry stores in the north of Vice City are a good spot, available after the Chapter 3 mission 'Yasmani's Jewelry Jobs'; loot a couple of items in each and break the safe in the back room with sticky bombs. The pop is delayed about half a minute after leaving the third shop, and if it does not fire, rob a fourth.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 35,
@@ -528,11 +903,18 @@
    "hidden": false,
    "kind": "collectibles",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 100,
    "countUnit": "vehicles",
    "stage": 4,
-   "guide": "Discover 100 different vehicles. GTABase, via EGamers, says you scan them with WAiNK — there is no need to drive them — and scanning traffic near busy roads is the efficient way to tick them off.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Discover 100 different vehicles. PowerPyx: the game has 557 vehicles at launch (cars, bikes, boats, helicopters, planes). Use the WAiNK app — hold up on the D-pad to open it instantly, then hold R1 to scan — and stand on a busy road scanning traffic; scanning is enough, you do not need to drive them. Track progress under Touchpad > Progress > Vehicles. You need 200 of the 277 base models for the 100% checklist, so keep scanning past the trophy.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 36,
@@ -542,11 +924,18 @@
    "hidden": false,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 5,
    "countUnit": "enemies in one Combat Focus",
    "stage": 3,
-   "guide": "Take down 5 enemies in a single use of Combat Focus. GTABase, via EGamers: fill Focus before you start, use an assault rifle, and aim for gang members — cops, soldiers and civilians do not appear to count. A gang shootout with Focus ready is the setup.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Take down 5 enemies in a single use of Combat Focus. PowerPyx: activate it with L3 + R3 while aiming — it slows time, highlights weak spots and drains the purple focus bar. Buff focus first with food, drinks or Adrenaline (hold L1, press Triangle), wear body armor from an Ammu-Nation, and use an assault rifle like the Duke 556 for full-auto accuracy. Line up 5 enemies at a gang operation and drop them fast without missing. It does not seem to work on soldiers, police or civilians. Focus has 4 levels, raised by shooting ranges, golf, pool, fishing and headshots — it gets easier late in the game.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 37,
@@ -556,11 +945,18 @@
    "hidden": true,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 5,
-   "guide": "Make an unscheduled departure at VCIA (Vice City International Airport). GTABase, via EGamers: steal a docked passenger jet and fly about 1 km away from the airport.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Make an unscheduled departure at VCIA (Vice City International Airport). PowerPyx: steal one of the large passenger planes docked to a departure terminal — the easiest is at terminals E3/E4, reached by driving through a fence around the airfield and up the stairs by the boarding bridge. It does not work with the planes parked on the airfield. Inside, go upstairs to the cockpit, drive the plane backward to the airstrip, take off and fly at least 1 km away from the airport; the pop is slightly delayed.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 38,
@@ -570,11 +966,18 @@
    "hidden": true,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 5,
-   "guide": "The description is a joke about Rhinos — the tanks. GTABase, via EGamers: steal a tank from Mile Zero Air Station and take out enemies from inside it.",
-   "sources": ["exophase", "egamers"]
+   "guide": "The description is a joke about Rhinos — the tanks. PowerPyx: steal a military tank at Mile Zero Air Station, the island on the south-west edge of the map in Mariana County. The tanks stand in the south of the base; drive through the gate or take the stunt jump by the south-east entrance, climb in and shoot enemies until the trophy unlocks.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 39,
@@ -584,11 +987,18 @@
    "hidden": false,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 5,
-   "guide": "Rob a jewelry store without being detected. GTABase, via EGamers: open the store's back door with the Snap Gun, find the safe code, and clear out the safe without anyone spotting you. Go in quiet — one alert ends the attempt.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Rob a jewelry store without being detected. PowerPyx: first finish the Chapter 3 mission 'Yasmani's Jewelry Jobs' — it unlocks the Snap Gun for silently lockpicking alarmed doors and marks jewelry robberies with green icons. Break in through the back door with the Snap Gun (kicking it sets off the alarm), find the note with the safe code, loot the safe, destroy the security footage and disable the alarm in the back room. A good spot is Richardson Jewelry & Diamonds in Vice City. The trophy pops shortly after you leave the store.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 40,
@@ -598,13 +1008,19 @@
    "hidden": false,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": true,
+   "missableReason": null,
+   "timeSensitiveReason": "Bank-vault robberies unlock only through the Chapter 4 optional mission 'That's Where The Money Is...' (wait at the cafe). It is marked automatically from story progress — take it when it appears, because vaults are the only way to this trophy and all 8 are needed for the 100% checklist. (PowerPyx)",
    "count": 5,
    "countUnit": "bank vaults",
    "stage": 5,
-   "guide": "Rob 5 bank vaults and escape. GTABase, via EGamers: it requires the optional Chapter 4 mission 'That's Where The Money Is...', after which you follow a security van into a bank while its vault is open. Expect 4 stars on the way out, and have a fast bike ready for the escape. The 100% checklist wants 8 vaults, so keep robbing past the trophy.",
-   "sources": ["exophase", "egamers"]
-  }
-,
+   "guide": "Rob 5 bank vaults and escape. PowerPyx: first finish the Chapter 4 optional mission 'That's Where The Money Is...' — you tail a security van to a bank, a guard carries a briefcase in and the vault opens; go in fast and rob it, bringing your partner to carry a second bag (hold right on the D-pad to hand one off). After the mission, pay Yasmani $10,000 for security-van tips (after his earlier quests, including 2 Payday Loan robberies) and follow the purple van icons to more banks. There are 8 large bank jobs in total and the checklist wants all 8; each pays up to $205,000. Robbing a vault instantly gives 4 stars, so have a fast motorcycle ready and switch vehicles to become unrecognizable.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
+  },
   {
    "id": 41,
    "name": "A Classic Blitz Play",
@@ -613,11 +1029,18 @@
    "hidden": false,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": true,
+   "missableReason": null,
+   "timeSensitiveReason": "The easiest unlock is the same Chapter 4 optional mission as Maximum Withdrawal — 'That's Where The Money Is...' — which counts a vault robbery as an armored-truck robbery. Take the mission when it appears. (PowerPyx)",
    "count": null,
    "countUnit": null,
    "stage": 5,
-   "guide": "Rob an armored truck and escape. Armored trucks patrol the roads; hit one, take the cash, and break the wanted level. It is the smallest of the robbery trophies and a good warm-up for the vaults.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Rob an armored truck and escape. PowerPyx: it unlocks automatically in the Chapter 4 optional mission 'That's Where The Money Is...', since robbing a bank vault counts as robbing an armored truck — tail the truck to the bank, rob the vault, then escape the red heat radius or use a Pay 'n' Spray. There is also an earlier method: armored trucks drive around Vice City near banks — block one, plant a sticky bomb on its back door (sticky bombs are in the back of Yasmani's shop after his quests) and blow it open. The trophy pops only after you escape the heat.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 42,
@@ -627,11 +1050,18 @@
    "hidden": false,
    "kind": "exploration",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 4,
-   "guide": "Explore all of Leonida — clear the fog across the whole map. EGamers, via its unfog map guide, says flying over the dark patches is reportedly the quickest method. Pair it with WAiNK locations and vehicle scanning on the same flights.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Explore all of Leonida — clear the fog across the whole map. PowerPyx: the fastest way is by plane, flying over every black-fog patch until the entire map is visible. Pair it with WAiNK locations and vehicle scanning on the same flights.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 43,
@@ -641,11 +1071,18 @@
    "hidden": false,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 9,
    "countUnit": "gangs",
    "stage": 5,
-   "guide": "Rob an illegal operation belonging to each of the 9 gangs (GTABase, via EGamers). One operation per gang is enough; EGamers links a gang-operations guide to find them all.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Rob an illegal operation belonging to each of the 9 gangs (PowerPyx). There are 39 illegal gang operations in total, and the 100% checklist wants all of them — so one per gang is enough for the trophy, then keep going. They show as yellow icons on the map when you get near them, and many are marked automatically from story progress. Track each gang under Progress > Gangs.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 44,
@@ -655,11 +1092,18 @@
    "hidden": true,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 3,
-   "guide": "Enjoy a cocktail with a view on Ocean Beach. The exact steps were unconfirmed at launch (PowerPyx, via EGamers) — the description itself is the guide: find a bar spot with a view on Ocean Beach and order a cocktail. Do not chase it blindly; treat it as an Ocean Beach visit and try the beachfront bars.",
-   "sources": ["exophase", "egamers", "powerpyx"]
+   "guide": "Enjoy a cocktail with a view on Ocean Beach. PowerPyx has now confirmed the trigger: go to the Ocean View Rooftop Bar and buy an Apple Martini, then drink it while standing next to the bar. The description itself was the clue — a rooftop bar with a view over Ocean Beach.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 45,
@@ -669,11 +1113,18 @@
    "hidden": true,
    "kind": "crime",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 5,
-   "guide": "Smash your way out of a vehicle showroom in classic style. GTABase thinks it involves crashing a car out through a showroom window, but that is unconfirmed (via EGamers). The honest approach: drive a car through a showroom's front window and out the other side — the classic GTA showroom smash.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Smash your way out of a vehicle showroom in classic style. PowerPyx has now confirmed it: steal the blue Banshee from the showroom in the south of Vice City — only that car works — and drive it straight through the showroom window. You can only steal it after obtaining the Key Cloner in the Chapter 3 mission 'Clonin' Keys, Makin' GS'. The pop is slightly delayed, firing after you drive further down the street. It is an easter egg nod to the Banshee from GTA III.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 46,
@@ -683,11 +1134,18 @@
    "hidden": true,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": true,
+   "missableReason": null,
+   "timeSensitiveReason": "The robbery is introduced by the Chapter 2 optional mission 'Hit Kingpin Bowling', which is marked automatically in Chapter 2. Do it when it appears — the trophy is NOT missable (the robbery icon respawns if you miss a valuable), but the mission is the natural first chance. (PowerPyx)",
    "count": null,
    "countUnit": null,
    "stage": 3,
-   "guide": "Follow-through at the Kolt & Associates' bowling alley. The wording is unclear at launch, but Output Lag reports the trigger as robbing Kingpin Bowling — go to the alley and treat the robbery as the likely trigger, not a friendly game.",
-   "sources": ["exophase", "outputlag"]
+   "guide": "Follow-through at the Kolt & Associates' bowling alley. PowerPyx: steal all 3 key valuables at Kingpin Bowling in Port Gellhorn — a gang operation, and the Chapter 2 optional mission 'Hit Kingpin Bowling' takes you there. Buy sticky bombs from an Ammu-Nation first: the luxury watch is in the south-east office, the unique shotgun 'Gutterball Moreland 850' sits on a table in the north-east corner, and the safe is in the north-east hallway — blow it with sticky bombs. The trophy pops after you escape the police, not when you grab the third item. It is not missable: if you miss a valuable, wait for the robbery icon to respawn and go back for what is left.",
+   "sources": [
+    "exophase",
+    "outputlag",
+    "powerpyx"
+   ]
   },
   {
    "id": 47,
@@ -697,11 +1155,18 @@
    "hidden": true,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 3,
-   "guide": "A partnership with mass appeal. GTABase, via EGamers, reports the trigger as maxing out Strength for both characters — train both Jason and Lucia to full Strength.",
-   "sources": ["exophase", "egamers"]
+   "guide": "A partnership with mass appeal. PowerPyx has now confirmed the trigger: have maximum Strength with both Jason and Lucia at the same time. Check Strength under Touchpad > Jason & Lucia (heart icon). It only starts after the Chapter 2 mission 'Coffee Break', when you can switch characters. Buy a fitness-club membership and always work out together — hold right on the D-pad and press Triangle to call your partner — because while one character trains, the other completes their training automatically. Filter for fitness clubs on Map > Activities; you can also work out at home after the story.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 48,
@@ -711,11 +1176,18 @@
    "hidden": true,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 500,
    "countUnit": "Criminal Profile actions",
    "stage": 3,
-   "guide": "Choices made, for better or worse. GTABase, via EGamers and as a single source, links it to 500 actions that change your Criminal Profile. EGamers warns the Irredeemable profile state is permanent, so read a Criminal Profile guide before going on a rampage — the count builds across the whole playthrough, and normal play gets you most of the way there.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Choices made, for better or worse. PowerPyx: perform 500 actions that affect your Criminal Profile — you can watch the count by clicking the trophy in the trophy list, and turning on Criminal Profile notifications (Settings > UI > HUD Notifications > Criminal Profile = On) shows a demon face whenever an action lands. The profiles run Professional (stealthy objectives, clean escapes), Hardened (incapacitating without killing), Violent, Psycho and Irredeemable — the last is permanent, so avoid excessive violence. It builds passively across robberies and encounters, so it usually pops on its own late in the run.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 49,
@@ -723,13 +1195,20 @@
    "description": "Second time's the charm.",
    "grade": "bronze",
    "hidden": true,
-   "kind": "unconfirmed",
+   "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 6,
-   "guide": "Second time's the charm. No confirmed unlock method at launch (PowerPyx, via EGamers). The name suggests succeeding on a second attempt at something — but that is a guess, not a guide. Honest status: unconfirmed. Do not chase it blindly; revisit it once the community pins the trigger down.",
-   "sources": ["exophase", "egamers", "powerpyx"]
+   "guide": "Second time's the charm. PowerPyx's current lead is the Payday Loans store from the Prologue — the name fits succeeding on a second attempt there — but no method is confirmed yet. The honest approach: visit the Payday Loans store early in the Prologue and again after the story, try a second attempt at whatever it offers, and revisit this trophy once the community pins the trigger down. The official description alone gives no step, so treat this as a lead, not a confirmed method.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 50,
@@ -737,13 +1216,20 @@
    "description": "What the hell just happened?",
    "grade": "bronze",
    "hidden": true,
-   "kind": "unconfirmed",
+   "kind": "exploration",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 6,
-   "guide": "What the hell just happened? No confirmed method at launch (PowerPyx, via EGamers). GTABase thinks it refers to a strange event somewhere in Leonida, but that is unconfirmed. The name points at an easter-egg-style encounter — explore odd corners of the map and revisit this one once the trigger is confirmed.",
-   "sources": ["exophase", "egamers"]
+   "guide": "What the hell just happened? PowerPyx has now confirmed it: this is the UFO easter egg. Go alone to the road north-west of the Starlet Motel in Kelly County, at night after 2AM. The spawn is slightly random — sometimes a blinking car is parked at the roadside, sometimes not; if it is not there, drive away and come back. When the car is there, follow the path from it into the woods and you will see the UFO (a bright blue light in the sky). Approach it and it drops a woman it abducted; talk to her, offer to help, and walk her back to her car at the roadside to unlock the trophy.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 51,
@@ -753,11 +1239,18 @@
    "hidden": true,
    "kind": "activities",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": null,
    "countUnit": null,
    "stage": 3,
-   "guide": "Bowl 'em over with a melee drive-by. The steps were unconfirmed at launch (PowerPyx, via EGamers), but the name describes the act: a melee drive-by that knocks someone down like a bowling pin. Try it from a slow-moving vehicle with a melee weapon against a pedestrian — and mind your Criminal Profile (see Actions Speak Louder).",
-   "sources": ["exophase", "egamers", "powerpyx"]
+   "guide": "Bowl 'em over with a melee drive-by. PowerPyx's current lead is kicking an enemy while riding a motorcycle — the description is the act itself: a melee strike from a moving vehicle that knocks someone down like a bowling pin. Try it from a slow-moving motorcycle with a melee weapon ready, against a pedestrian. Mind your Criminal Profile (see Actions Speak Louder) — and revisit this trophy once the trigger is confirmed.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 52,
@@ -767,11 +1260,18 @@
    "hidden": false,
    "kind": "money",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 250000,
    "countUnit": "dollars laundered",
    "stage": 5,
-   "guide": "Launder $250,000 in Marked Bills through your contacts (fences). GTABase, via EGamers, notes one fence pays the most, and the total grows naturally during the 100% robberies — bank vaults and gang operations are your supply of Marked Bills, so this trophy finishes late in stage 5.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Launder $250,000 in Marked Bills through your contacts (fences). PowerPyx: first finish the Chapter 3 mission 'Credit Check (Meet Raul's Crew)' to unlock the Dye Pack Jammer, then rob banks and Payday Loans and bring the marked bills to a fence — Yasmani in Vice City pays the most. The $250,000 is cumulative across robberies, not in one trip, and bank vaults pay up to $205,000 each, so this finishes naturally during the robbery cleanup for the 100% checklist.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 53,
@@ -781,11 +1281,18 @@
    "hidden": false,
    "kind": "money",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 100000,
    "countUnit": "dollars spent",
    "stage": 5,
-   "guide": "Spend $100,000 across all shops. Any shops count and the total accumulates over the whole playthrough — clothes, weapons, food and the garage purchases all feed it, so it usually pops on its own during the money stage.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Spend $100,000 across all shops. PowerPyx: any shops count and the total accumulates over the whole playthrough — guns, car mods and tattoos are the fastest, since they are the most expensive. The map holds 14 mod shops, 19 Pay 'n' Sprays, 24 Ammu-Nations, 67 clothing stores, 17 footwear stores, 18 hair and beauty salons, 11 tattoo studios and 15 electronics stores. It usually pops on its own during the money stage.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   },
   {
    "id": 54,
@@ -795,11 +1302,18 @@
    "hidden": false,
    "kind": "money",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 8,
    "countUnit": "garage properties",
    "stage": 5,
-   "guide": "Purchase all garage properties — the 8 garages in the Vice City Real Estate app, around $160,000 in total (GTABase, via EGamers). The 4 story garages do not count, so buy all 8 from the app.",
-   "sources": ["exophase", "egamers"]
+   "guide": "Purchase all garage properties — the 8 garages in the Vice City Real Estate app, $160,000 in total (PowerPyx). The 4 story garages do not count. Garages become available after the Chapter 2 mission 'Daily Driver (Steal the Crawler for Moses)', when the app installs on your phone. Robberies are the quick way to the money, especially the higher-value ones in Chapters 3-4.",
+   "sources": [
+    "exophase",
+    "egamers",
+    "powerpyx"
+   ]
   },
   {
    "id": 55,
@@ -809,11 +1323,18 @@
    "hidden": false,
    "kind": "money",
    "missable": false,
+   "timeSensitive": false,
+   "missableReason": null,
+   "timeSensitiveReason": null,
    "count": 10,
    "countUnit": "vehicles registered",
    "stage": 5,
-   "guide": "Register 10 vehicles to the Scooter Bros app. Any 10 vehicles you own or find count — pair it with Whip It Good's vehicle discovery and register the interesting ones as you scan them.",
-   "sources": ["exophase", "gtabase"]
+   "guide": "Register 10 vehicles to the Scooter Bros app. PowerPyx: the app installs on your phone after the Chapter 2 mission 'Moses (Take A Vehicle to Moses)'. Buy garages first — each one adds parking spots to register more vehicles — then drive stolen vehicles to Moses in Port Gellhorn and choose 'Respray' and 'Register' in his garage. At first he only accepts vehicles without trackers; from Chapter 3 you can also register cars with Standard Trackers at any Pay 'n' Spray. Registering costs money, so use cheap low-end cars and bikes. Pair it with Whip It Good's vehicle discovery.",
+   "sources": [
+    "exophase",
+    "gtabase",
+    "powerpyx"
+   ]
   }
  ]
 }
