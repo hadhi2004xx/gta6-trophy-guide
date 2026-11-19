@@ -1,120 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leonida 100% — GTA VI Trophy Guide &amp; Tracker</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="./style.css">
+<script type="module" src="./app.js"></script>
 </head>
 <body>
 <header class="masthead">
-  <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; Offline guide &amp; tracker</p>
-  <h1>Leonida 100% — GTA VI Trophy Guide &amp; Tracker</h1>
-  <p class="lede">Every one of the 55 official trophies — official names, descriptions and grades, a cited guide for each, and a roadmap to the Platinum. Tick one off and it stays ticked in this browser. No network needed.</p>
-  <dl class="audit" id="audit" aria-label="List audit">
-    <div><dt>Trophies</dt><dd id="audit-total">55</dd></div>
-    <div><dt>Grades</dt><dd id="audit-grades">1&middot;2&middot;6&middot;46</dd></div>
-    <div><dt>Hidden</dt><dd id="audit-hidden">28</dd></div>
-    <div><dt>Missable</dt><dd id="audit-missable">1</dd></div>
-    <div><dt>Do early</dt><dd id="audit-doearly">3</dd></div>
-    <div><dt>Online</dt><dd id="audit-online">0</dd></div>
-  </dl>
-  <div class="progress" role="status" aria-live="polite">
-    <svg class="ring" id="progress-ring" viewBox="0 0 72 72" width="72" height="72" aria-hidden="true">
-      <circle class="ring-track" cx="36" cy="36" r="30"></circle>
-      <circle class="ring-fill" id="ring-fill" cx="36" cy="36" r="30"></circle>
-    </svg>
-    <div class="progress-body">
-      <p class="progress-pct" id="progress-pct">0%</p>
-      <div class="progress-bar"><span id="progress-fill"></span></div>
-      <p id="progress-text">0 of 55 earned &middot; 55 to go</p>
-    </div>
-    <p class="progress-note">Platinum: ~200 hours &middot; 5 chapters &middot; 1 playthrough &middot; 0 online</p>
-  </div>
+  <p class="eyebrow">Grand Theft Auto VI — PlayStation 5 — Offline guide</p>
+  <h1>Leonida 100%</h1>
+  <p class="lede">The 55-trophy guide and tracker. Every official name, description and grade, a guide in our own words with its sources named beside it, a roadmap to the platinum, and the one trophy you can miss.</p>
 </header>
 
+<section class="audit" id="audit-strip" aria-label="Trophy audit">
+  <div class="audit-cell"><span class="audit-num" id="audit-total">55</span><span class="audit-label">trophies</span></div>
+  <div class="audit-cell"><span class="audit-num" id="audit-grades">1·2·6·46</span><span class="audit-label">platinum · gold · silver · bronze</span></div>
+  <div class="audit-cell"><span class="audit-num" id="audit-hidden">28</span><span class="audit-label">hidden until earned</span></div>
+  <div class="audit-cell flag"><span class="audit-num" id="audit-missable">1</span><span class="audit-label">missable</span></div>
+  <div class="audit-cell flag"><span class="audit-num" id="audit-doearly">3</span><span class="audit-label">do early</span></div>
+  <div class="audit-cell"><span class="audit-num" id="audit-online">0</span><span class="audit-label">online</span></div>
+  <div class="audit-cell progress-cell">
+    <svg class="ring" viewBox="0 0 120 120" width="96" height="96" role="img" aria-label="Progress ring">
+      <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+      <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="52"></circle>
+    </svg>
+    <span class="audit-num" id="progress-text">0 / 55</span>
+    <span class="audit-label">earned — saved in this browser</span>
+  </div>
+</section>
+
+<div class="controls" id="controls">
+  <input type="search" id="search" placeholder="Search a trophy or guide…" aria-label="Search trophies">
+  <select id="kind-filter" aria-label="Filter by kind">
+    <option value="">All kinds</option>
+    <option value="story">Story</option>
+    <option value="missable">Missable</option>
+    <option value="do-early">Do early</option>
+    <option value="collectibles">Collectibles</option>
+    <option value="activities">Activities</option>
+    <option value="crime">Crime</option>
+    <option value="exploration">Exploration</option>
+    <option value="money">Money</option>
+  </select>
+  <select id="grade-filter" aria-label="Filter by grade">
+    <option value="">All grades</option>
+    <option value="platinum">Platinum</option>
+    <option value="gold">Gold</option>
+    <option value="silver">Silver</option>
+    <option value="bronze">Bronze</option>
+  </select>
+  <label class="check"><input type="checkbox" id="earned-only"> Earned only</label>
+  <label class="check"><input type="checkbox" id="spoiler-toggle" checked> Hide spoilers</label>
+  <button type="button" id="export-btn">Export progress</button>
+  <button type="button" id="import-btn">Import progress</button>
+  <input type="file" id="import-file" accept="application/json,.json" hidden>
+  <button type="button" id="reset-btn">Reset</button>
+</div>
+
 <main>
-  <section class="controls" aria-label="Tracker controls">
-    <label class="field search-field">Search
-      <input id="search" type="search" placeholder="Name, mission or keyword&hellip;" autocomplete="off">
-    </label>
-    <label class="field">Kind
-      <select id="kind">
-        <option value="all">All kinds</option>
-        <option value="story">Story</option>
-        <option value="missable">Missable</option>
-        <option value="do-early">Do early</option>
-        <option value="collectibles">Collectibles</option>
-        <option value="activities">Activities</option>
-        <option value="crime">Crime &amp; robbery</option>
-        <option value="exploration">Exploration</option>
-        <option value="money">Money &amp; property</option>
-        <option value="platinum">Platinum path</option>
-      </select>
-    </label>
-    <label class="field">Grade
-      <select id="grade">
-        <option value="all">All grades</option>
-        <option value="platinum">Platinum</option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="bronze">Bronze</option>
-      </select>
-    </label>
-    <label class="check"><input id="earned-only" type="checkbox"> Earned only</label>
-    <label class="check"><input id="spoilers" type="checkbox" checked> Hide story spoilers</label>
-    <button id="export" type="button">Export progress</button>
-    <label class="import-btn">Import progress
-      <input id="import" type="file" accept="application/json,.json">
-    </label>
-    <button id="reset" type="button">Reset progress</button>
-  </section>
-
-  <p class="result-count" id="result-count" aria-live="polite"></p>
-
-  <section class="featured" aria-label="Start here">
+  <section id="featured" aria-label="Start here">
     <h2>Start here — the eight that shape the run</h2>
-    <p class="section-note">The one you can miss, the Platinum, the first mission, the 100% gate, and the four biggest grinds. Select any trophy to open its guide and sources.</p>
-    <div class="list featured-list" id="featured-list"></div>
+    <p class="section-note">One missable, three chapter-gated, the hardest gold, the finale gold, and the three longest grinds. Read these first and the rest of the list falls into place.</p>
+    <ol class="featured-list" id="featured-list"></ol>
   </section>
 
-  <section class="trophies" aria-label="Trophy checklist">
-    <h2>Trophy checklist — all 55</h2>
-    <p class="section-note">Names, descriptions and grades are PlayStation&rsquo;s official text, as listed by Exophase and PSNProfiles. Hidden trophies stay masked while spoiler-hiding is on, until you earn them. Select a trophy to open its guide and sources.</p>
-    <div class="list" id="list"></div>
-  </section>
-
-  <section class="roadmap" id="roadmap" aria-label="Roadmap to the Platinum">
-    <h2>Roadmap to the Platinum</h2>
-    <p class="section-note">Six stages, in order, from the official descriptions and PowerPyx&rsquo;s launch roadmap.</p>
-    <ol class="stages" id="stages"></ol>
-    <div class="audit-panel" id="missable-audit">
-      <h3>Missable audit — why the count is 1, not 10</h3>
-      <p>Every trophy was checked against its official description and the launch guides. Only <strong>Positive Mental Attitude</strong> can be lost for good: Lucia&rsquo;s Chapter 1 balcony meditation never comes back. The candidates that look missable are not: Kenton vanishes for a chapter but returns (call Brian as Jason in Chapter 2 to speed it up); Andy, Billy, Randy, Tyrone and Bret all stay available in free-roam after the story; the 8 Strangers &amp; Freaks strands persist; Kingpin Bowling&rsquo;s robbery icon respawns if you miss a valuable; and optional missions that disappear never block a trophy or the 100% checklist. Sources: PowerPyx, GTABase, EGamers.</p>
-    </div>
-    <div class="doearly" aria-label="Do these early">
-      <h3>Do these early — the only time-gated steps</h3>
-      <p class="section-note">PowerPyx&rsquo;s launch guide lists exactly <strong>one</strong> potentially missable trophy. Three more steps sit behind story chapters, so do them when they appear. Everything else can be cleaned up in free-roam after the story.</p>
-      <div class="doearly-grid" id="doearly-grid"></div>
+  <section id="guide-section" aria-label="Trophy guide">
+    <h2>Trophy guide</h2>
+    <div class="guide-panel" id="guide-panel">
+      <p class="guide-empty">Pick a trophy below to read its guide, its sources, and — where it applies — why it can be missed.</p>
     </div>
   </section>
 
-  <section class="notes" aria-label="Run notes">
-    <h2>Before you start</h2>
-    <ul id="run-notes"></ul>
+  <section id="checklist" aria-label="Checklist">
+    <h2>Checklist — all 55 trophies</h2>
+    <p class="section-note"><span id="result-count">55 shown</span> · tick a trophy when you earn it; progress is saved in this browser and survives reloads. Hidden trophies stay masked while spoilers are hidden.</p>
+    <ol class="trophy-list" id="trophy-list"></ol>
   </section>
 
-  <section class="sources" aria-label="Sources">
-    <h2>Sources</h2>
-    <p class="section-note">Every guide names where its facts come from. Official names, descriptions and grades come from the PlayStation list as published on Exophase and PSNProfiles; specific locations, counts and steps are credited to the guide that reported them — most of them to PowerPyx&rsquo;s full launch guide, read on 20 Nov 2026. Nothing here is copied from another guide — the words are our own.</p>
-    <ul id="source-list"></ul>
+  <section id="roadmap" aria-label="Roadmap to the platinum">
+    <h2>Roadmap to the platinum</h2>
+    <p class="section-note">Six stages, built from the official descriptions: which story chapters and missions, which collectibles and counts, in what order. Roughly 200 hours in total, per PowerPyx — 60–80 of story, about 100 of checklist, about 10 of cleanup.</p>
+    <div class="stage-grid" id="roadmap"></div>
+  </section>
+
+  <section id="missable-audit" aria-label="Missable audit">
+    <h2>Missable audit — what was checked and cleared</h2>
+    <p class="section-note">PowerPyx is explicit: “Number of missable trophies: Potentially 1 – Positive Mental Attitude”. The candidates below were checked against that source and cleared, so the count is 1, not inflated.</p>
+    <ul class="audit-list" id="missable-audit-list"></ul>
   </section>
 </main>
 
 <footer>
-  <p>Leonida 100% — an unofficial fan guide. Grand Theft Auto and GTA are trademarks of Rockstar Games; no Rockstar logo, artwork or game screenshot is used here. Works fully offline: all files live under this folder.</p>
+  <p>Sources per trophy: PowerPyx (GTA 6 Trophy Guide &amp; Roadmap), GTABase (trophy list), EGamers (trophy list and hidden table), PSNProfiles and Exophase (official list agreement). Guides are written for this entry in our own words; a source is cited, never copied. Official names and descriptions are shown as PlayStation publishes them.</p>
+  <p>Offline: this guide is static files only and fetches nothing at run time. No Rockstar logo or artwork is used. Cheats disable trophies and saving, per GTABase and TechWiser — leave cheats off for a trophy run.</p>
 </footer>
-
-<script type="module" src="app.js"></script>
 </body>
 </html>
