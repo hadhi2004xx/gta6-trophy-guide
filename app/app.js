@@ -44,9 +44,17 @@ const state = {
   },
   rerenderLists() {
     renderFeaturedExcerpt(doc, state);
-    renderTrophyList(doc, filterTrophies(doc.trophies, readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl), (n) => tracker.isEarned(n)), state);
+    renderTrophyList(doc, visibleTrophies(), state);
   },
 };
+
+function currentFilters() {
+  return readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl);
+}
+
+function visibleTrophies() {
+  return filterTrophies(doc.trophies, currentFilters(), (n) => tracker.isEarned(n));
+}
 
 export function readUrlState() {
   const params = new URLSearchParams(window.location.search);
@@ -87,14 +95,18 @@ function renderAll() {
   renderProgress(doc, tracker.size());
   renderRoadmap(doc, (n) => tracker.isEarned(n), () => spoilersEl.checked);
   renderFeaturedExcerpt(doc, state);
-  renderTrophyList(doc, filterTrophies(doc.trophies, readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl), (n) => tracker.isEarned(n)), state);
+  renderTrophyList(doc, visibleTrophies(), state);
+}
+
+function refreshListOnly() {
+  renderTrophyList(doc, visibleTrophies(), state);
 }
 
 function wireEvents() {
-  searchEl.addEventListener('input', () => renderTrophyList(doc, filterTrophies(doc.trophies, readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl), (n) => tracker.isEarned(n)), state));
-  kindEl.addEventListener('change', () => renderTrophyList(doc, filterTrophies(doc.trophies, readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl), (n) => tracker.isEarned(n)), state));
-  gradeEl.addEventListener('change', () => renderTrophyList(doc, filterTrophies(doc.trophies, readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl), (n) => tracker.isEarned(n)), state));
-  earnedOnlyEl.addEventListener('change', () => renderTrophyList(doc, filterTrophies(doc.trophies, readFilterState(searchEl, kindEl, gradeEl, earnedOnlyEl), (n) => tracker.isEarned(n)), state));
+  searchEl.addEventListener('input', refreshListOnly);
+  kindEl.addEventListener('change', refreshListOnly);
+  gradeEl.addEventListener('change', refreshListOnly);
+  earnedOnlyEl.addEventListener('change', refreshListOnly);
   spoilersEl.addEventListener('change', renderAll);
   document.getElementById('export').addEventListener('click', () => exportProgressFile(doc, tracker.earnedNames()));
   document.getElementById('import').addEventListener('change', async (event) => {

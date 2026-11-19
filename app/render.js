@@ -1,8 +1,8 @@
-// DOM rendering for the Leonida 100% guide: audit strip, progress ring,
+// DOM painting for the Leonida 100% guide: the audit strip, progress ring,
 // do-early panel, featured excerpt, checklist rows, open-guide panels, run
-// notes and the source list. Rendering is pure DOM construction — no
-// innerHTML, no copied text — so every row shows the official name,
-// description and grade exactly as the data file carries them.
+// notes and the source list. Everything is built with DOM calls — no
+// innerHTML — so each row shows the official name, description and grade
+// exactly as the data file carries them.
 import { auditCounts, featuredTrophies, doEarlyTrophies } from './data.js';
 import { kindLabel } from './filters.js';
 import { progressText, ringOffsetForPercent } from './tracker.js';
@@ -30,9 +30,7 @@ export function renderProgress(doc, earnedCount) {
 export function renderDoEarlyPanel(doc) {
   const grid = document.getElementById('doearly-grid');
   grid.replaceChildren();
-  for (const t of doEarlyTrophies(doc)) {
-    grid.append(renderDoEarlyCard(t));
-  }
+  for (const t of doEarlyTrophies(doc)) grid.append(renderDoEarlyCard(t));
 }
 
 export function renderDoEarlyCard(t) {
@@ -70,6 +68,13 @@ export function renderSourceLink(doc, key) {
   const span = document.createElement('span');
   span.textContent = src.name;
   return span;
+}
+
+function makeChip(className, text) {
+  const chip = document.createElement('span');
+  chip.className = className;
+  chip.textContent = text;
+  return chip;
 }
 
 export function renderGuidePanel(doc, trophy, masked) {
@@ -110,6 +115,26 @@ export function renderGuidePanel(doc, trophy, masked) {
   return box;
 }
 
+function renderRowMeta(trophy) {
+  const meta = document.createElement('div');
+  meta.className = 'trophy-meta';
+  meta.append(makeChip(`chip grade-${trophy.grade}`, trophy.grade));
+  // Platinum-path trophies already carry the grade chip, and missable
+  // trophies already carry the missable flag — the kind chip would repeat it.
+  if (trophy.kind !== 'platinum' && trophy.kind !== 'missable') {
+    meta.append(makeChip('chip', kindLabel(trophy.kind)));
+  }
+  if (trophy.hidden) meta.append(makeChip('chip hidden-flag', 'hidden'));
+  if (trophy.missable) {
+    meta.append(makeChip('chip missable', 'missable'));
+  } else if (trophy.timeSensitive) {
+    meta.append(makeChip('chip doearly', 'do early'));
+  }
+  const countText = formatCountChip(trophy);
+  if (countText) meta.append(makeChip('chip count', countText));
+  return meta;
+}
+
 export function renderTrophyRow(doc, trophy, state) {
   const article = document.createElement('article');
   article.className = 'trophy' + (state.isEarned(trophy.name) ? ' earned' : '');
@@ -139,48 +164,8 @@ export function renderTrophyRow(doc, trophy, state) {
   const desc = document.createElement('p');
   desc.className = 'trophy-desc';
   desc.textContent = masked ? 'Hidden on PlayStation until earned.' : trophy.description;
-  const meta = document.createElement('div');
-  meta.className = 'trophy-meta';
-  const gradeChip = document.createElement('span');
-  gradeChip.className = `chip grade-${trophy.grade}`;
-  gradeChip.textContent = trophy.grade;
-  meta.append(gradeChip);
-  // Platinum-path trophies already carry the grade chip, and missable
-  // trophies already carry the missable flag — the kind chip would repeat it.
-  if (trophy.kind !== 'platinum' && trophy.kind !== 'missable') {
-    const kindChip = document.createElement('span');
-    kindChip.className = 'chip';
-    kindChip.textContent = kindLabel(trophy.kind);
-    meta.append(kindChip);
-  }
-  if (trophy.hidden) {
-    const hiddenChip = document.createElement('span');
-    hiddenChip.className = 'chip hidden-flag';
-    hiddenChip.textContent = 'hidden';
-    meta.append(hiddenChip);
-  }
-  if (trophy.missable) {
-    const missChip = document.createElement('span');
-    missChip.className = 'chip missable';
-    missChip.textContent = 'missable';
-    meta.append(missChip);
-  } else if (trophy.timeSensitive) {
-    const earlyChip = document.createElement('span');
-    earlyChip.className = 'chip doearly';
-    earlyChip.textContent = 'do early';
-    meta.append(earlyChip);
-  }
-  const countText = formatCountChip(trophy);
-  if (countText) {
-    const countChip = document.createElement('span');
-    countChip.className = 'chip count';
-    countChip.textContent = countText;
-    meta.append(countChip);
-  }
-  main.append(name, desc, meta);
-  const chevron = document.createElement('span');
-  chevron.className = 'chip';
-  chevron.textContent = state.openGuide === trophy.id ? 'guide open' : 'guide';
+  main.append(name, desc, renderRowMeta(trophy));
+  const chevron = makeChip('chip', state.openGuide === trophy.id ? 'guide open' : 'guide');
   head.append(box, main, chevron);
 
   head.addEventListener('click', () => {

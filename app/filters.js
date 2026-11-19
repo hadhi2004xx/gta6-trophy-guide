@@ -1,8 +1,9 @@
 // Checklist filtering for the Leonida 100% tracker.
-// One predicate per control — search text, kind, grade, earned-only — combined
-// by trophyMatches. Kinds follow the bounty: story, missable, collectibles,
-// activities, and online (the list has none); crime, exploration, money and
-// the platinum path are our own subdivisions of the same list.
+// One predicate per control — search text, kind, grade, earned-only —
+// combined by trophyMatches. Kinds follow the bounty: story, missable,
+// collectibles, activities, and online (the list has none); crime,
+// exploration, money and the platinum path are this entry's own
+// subdivisions of the same list.
 export const KIND_LABELS = {
   story: 'Story',
   missable: 'Missable',

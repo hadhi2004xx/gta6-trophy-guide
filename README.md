@@ -4,63 +4,73 @@
 [![rank](https://make.fun/badge/gta6-trophy-guide-01/hadhi2004xx/gta6-trophy-guide/rank.svg)](https://make.fun/bounty/gta6-trophy-guide-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
 [![reward](https://make.fun/badge/gta6-trophy-guide-01/hadhi2004xx/gta6-trophy-guide/reward.svg)](https://make.fun/bounty/gta6-trophy-guide-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-trophy-guide-01)
 
-An offline guide and tracker for all 55 PlayStation 5 trophies of Grand Theft
-Auto VI — 1 Platinum, 2 Gold, 6 Silver, 46 Bronze, 28 of them hidden until
-earned, 1 potentially missable, 3 more with chapter-gated steps, 0 needing
-online play. Built for the make.fun
+Every PlayStation 5 trophy in Grand Theft Auto VI — all 55 of them, with the
+official name, description and grade for each, a guide written for this
+entry, and a tracker that remembers what you have earned. The split is
+1 Platinum, 2 Gold, 6 Silver and 46 Bronze; 28 trophies stay hidden on
+PlayStation until you earn them, exactly one can be missed for good, three
+more have steps tied to a story chapter, and none of them needs online play.
+Built for the make.fun
 [gta6-trophy-guide-01](https://make.fun/bounty/gta6-trophy-guide-01) bounty.
 
-## What it is
+## Running it
 
-`app/` is plain static files — no build step, no network at runtime. Open
-`app/index.html` in a browser (or run `node serve.ts` and visit
-http://localhost:8080) and it works with the network off.
+`app/` is static files only — no build step and no network at run time.
+Open `app/index.html` directly, or serve it with `node serve.ts` and visit
+http://localhost:8080. Either way it works with the network off.
 
-- **Full official list.** Every trophy with its official name, description and
-  grade exactly as PlayStation publishes them (as listed by Exophase and
-  PSNProfiles), plus a per-trophy guide written in our own words.
-- **Cited guidance.** Each guide names its sources beside it — PowerPyx's
-  full launch guide first of all, plus GTABase, EGamers, Output Lag, GTA Vice
-  City Hub, GGRecon and CryptoGames — so a reader can see where every
-  specific location, count or step comes from. PowerPyx's guide, read on
-  20 Nov 2026, confirmed the triggers for 5 of the 6 trophies that were
-  unknown at launch (In The Beginning…, Capital Offense, Let's Go Bowling,
-  Personal Best, The Truth Is Out There); the last two leads (Bad Luck,
-  I Guess; Ten Pin) are stated as leads, not confirmed methods.
-- **Missable audit.** PowerPyx lists exactly one potentially missable
-  trophy — Positive Mental Attitude, whose first meditation happens only in
-  Chapter 1. The roadmap carries a written audit of the candidates that
-  were checked and cleared (Kenton returns, side strands persist, Kingpin
-  Bowling respawns, disappearing optional missions never block a trophy),
-  each with its source. Three further trophies are flagged "do early" for
-  their chapter-gated steps: Maximum Withdrawal, A Classic Blitz Play and
-  Let's Go Bowling.
-- **Tracker.** Checklist saved in `localStorage`, export to a JSON file and
-  import it back, filters by kind (story, missable, do early, collectibles,
-  activities, crime, exploration, money, platinum path) and by grade, text
-  search, and an earned-only view. A progress ring and bar track the run.
-- **Spoiler setting.** On by default: hidden story trophies stay masked until
-  earned. Earned hidden trophies reveal their real names.
-- **Roadmap.** Six stages in order, built from the official descriptions and
-  PowerPyx's launch roadmap: 5 chapters and roughly 91–93 story missions,
-  side characters, activities, collectibles, crime and money, and the 35-task
-  100% checklist last. Each stage shows its chapter range, trophy count and
-  earned count, with missable and do-early flags on the rows inside it.
-- **Deep links.** Real app states, used for the screenshots:
-  `?trophy=28` opens one trophy's guide, `?spoilers=hidden|shown` sets the
-  spoiler switch, `?kind` / `?grade` / `?earned-only=1` set the filters,
-  `?view=roadmap` jumps to the roadmap.
+## What is inside
 
-## Layout
+- **The whole official list.** All 55 trophies with PlayStation's official
+  name, description and grade, as published on Exophase and PSNProfiles.
+  Each one also carries a guide in this entry's own words.
+- **A source beside every guide.** Each trophy's guide names where its
+  facts come from — PowerPyx's full launch guide first, then GTABase,
+  EGamers, Output Lag, GTA Vice City Hub, GGRecon and CryptoGames — so a
+  reader can check any location, count or step. PowerPyx's guide, read on
+  20 Nov 2026, pinned down the triggers for 5 of the 6 trophies that were
+  still unknown at launch (In The Beginning…, Capital Offense, Let's Go
+  Bowling, Personal Best, The Truth Is Out There). The last two leads
+  (Bad Luck, I Guess; Ten Pin) are labelled as leads, not confirmed ways
+  to earn them.
+- **A missable audit.** PowerPyx names exactly one trophy that can be
+  missed — Positive Mental Attitude, whose first meditation only happens
+  in Chapter 1. The roadmap carries a written audit of the candidates that
+  were checked and cleared (Kenton comes back, the side strands stay
+  open, Kingpin Bowling's robbery icon respawns, and optional missions
+  that disappear never block a trophy), each with its source. Three more
+  trophies are flagged "do early" because their steps sit behind story
+  chapters: Maximum Withdrawal, A Classic Blitz Play and Let's Go Bowling.
+- **A tracker.** Tick trophies off and the checklist keeps them in
+  `localStorage`. Export the earned list to a JSON file and import it
+  back, filter by kind (story, missable, do early, collectibles,
+  activities, crime, exploration, money, platinum path) or by grade,
+  search by name or keyword, and show earned-only. A ring and a bar
+  track the run.
+- **Spoilers off by default — on, in the sense that hiding is on.**
+  Hidden story trophies stay masked until you earn them. Earn one and
+  its real name appears.
+- **A roadmap.** Six stages in order, drawn from the official descriptions
+  and PowerPyx's launch roadmap: 5 chapters and about 91–93 story
+  missions, the side characters, activities, collectibles, crime and
+  money, and the 35-task 100% checklist last. Every stage shows its
+  chapter range, how many trophies it holds and how many are earned,
+  with the missable and do-early flags on the rows inside it.
+- **Deep links.** The URL states are real app states, and the screenshots
+  use them: `?trophy=28` opens one trophy's guide,
+  `?spoilers=hidden|shown` sets the spoiler switch, `?kind` / `?grade` /
+  `?earned-only=1` set the filters, `?view=roadmap` jumps to the roadmap.
+
+## Files
 
 - `app/index.html` — page structure: hero audit strip, do-early panel,
   controls, featured excerpt, full checklist, roadmap, notes, sources.
 - `app/style.css` — Precision Technical / Swiss Grid: obsidian `#090A0D`,
-  hairlines, tabular numerals, one accent `#10B981`. Type is sized for the
-  dossier contact sheet, where the cover shrinks to 768×480.
+  hairlines, tabular numerals, a single accent `#10B981`. The type is
+  sized so the cover still reads when the dossier shrinks it to 768×480.
 - `app/app.js` — bootstrap: URL state, event wiring, render-all.
-- `app/data.js` — load and validate `trophies.json`; audit counts, featured
-  eight, do-early set.
+- `app/data.js` — load and validate `trophies.json`; audit counts, the
+  featured eight, the do-early set.
 - `app/storage.js` — localStorage load/save, export file, import parsing.
 - `app/tracker.js` — earned-state math: counts, percents, ring offset.
 - `app/filters.js` — search, kind, grade and earned-only matching.
@@ -73,10 +83,10 @@ http://localhost:8080) and it works with the network off.
 - `screenshots/` — 4 real headless-Chromium renders of the app:
   1-cover (hero stats + featured excerpt), 2-guide (Positive Mental
   Attitude open, large type), 3-roadmap (six-stage timeline + missable
-  audit), 4-tracker (spoiler on, 12 earned, export/import visible).
+  audit), 4-tracker (spoilers on, 11 earned, export/import visible).
   `shots.json` records each shot's URL state.
 
-## Verify
+## Checking it
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts   # run twice; dossier.json must be byte-identical

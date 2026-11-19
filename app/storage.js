@@ -1,7 +1,8 @@
-// Progress persistence for the Leonida 100% tracker.
-// Earned trophies live in localStorage under one key, so progress survives a
-// reload and never leaves the browser. Export writes a JSON file the reader
-// can keep; import reads that file back and keeps only names the list knows.
+// Saving progress for the Leonida 100% tracker.
+// Earned trophies live in localStorage under one key, so progress survives
+// a reload and never leaves the browser. Export writes a JSON file the
+// reader can keep; import reads that file back and keeps only names the
+// list knows.
 export const STORAGE_KEY = 'gta6-trophy-tracker-v1';
 
 export function loadStoredProgress() {

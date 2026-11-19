@@ -1,7 +1,8 @@
 // Earned-state math for the Leonida 100% tracker.
-// A tracker holds a Set of earned trophy names and answers the questions the
-// UI asks: is this one earned, how many are done, what percent is that.
-// It knows nothing about the DOM or storage; render.js and storage.js do.
+// A tracker holds a Set of earned trophy names and answers the questions
+// the UI asks: is this one earned, how many are done, what percent is
+// that. It knows nothing about the DOM or storage; render.js and
+// storage.js handle those.
 export function createTracker(initialNames) {
   const earned = new Set(Array.isArray(initialNames) ? initialNames : []);
   return {
@@ -49,8 +50,8 @@ export function progressText(done, total) {
 }
 
 export function ringOffsetForPercent(pct) {
-  // The ring's circumference is 2 * pi * 30 = 188.5. Full progress hides the
-  // offset entirely; zero progress shows the whole track.
+  // The ring's circumference is 2 * pi * 30 = 188.5. Full progress hides
+  // the offset entirely; zero progress shows the whole track.
   const clamped = Math.max(0, Math.min(100, pct));
   return 188.5 * (1 - clamped / 100);
 }

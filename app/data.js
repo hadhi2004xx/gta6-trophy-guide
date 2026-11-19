@@ -1,8 +1,8 @@
-// Trophy data loading and validation for the Leonida 100% guide.
+// Loading and checking the trophy data for the Leonida 100% guide.
 // The official list lives in app/data/trophies.json: 55 trophies with their
-// official name, description and grade, plus our own guide, sources and
-// roadmap fields. This module fetches it from the app's own server only —
-// the guide makes no network request to any other host.
+// official name, description and grade, plus this entry's own guide,
+// sources and roadmap fields. This module fetches it from the app's own
+// server only — the guide makes no network request to any other host.
 export const DATA_URL = 'data/trophies.json';
 export const EXPECTED_TROPHY_COUNT = 55;
 
@@ -21,13 +21,13 @@ export function validateTrophyData(doc) {
   if (doc.trophies.length !== EXPECTED_TROPHY_COUNT) {
     throw new Error(`expected ${EXPECTED_TROPHY_COUNT} trophies, found ${doc.trophies.length}`);
   }
-  const names = new Set();
+  const seen = new Set();
   for (const t of doc.trophies) {
     if (typeof t.id !== 'number' || !t.name || !t.description || !t.grade) {
       throw new Error(`trophy ${JSON.stringify(t && t.id)} is missing id, name, description or grade`);
     }
-    if (names.has(t.name)) throw new Error(`duplicate trophy name: ${t.name}`);
-    names.add(t.name);
+    if (seen.has(t.name)) throw new Error(`duplicate trophy name: ${t.name}`);
+    seen.add(t.name);
     if (typeof t.guide !== 'string' || t.guide.trim() === '') {
       throw new Error(`trophy ${t.name} has no guide text`);
     }
@@ -71,9 +71,9 @@ export function auditCounts(doc) {
 }
 
 export function featuredTrophies(doc) {
-  // The eight that shape the run: the missable one, the Platinum, the first
-  // mission, the 100% gate, and the biggest grinds. Kept in data so the
-  // featured excerpt and the full list can never drift apart.
+  // The eight that shape the run: the missable one, the Platinum, the
+  // first mission, the 100% gate, and the biggest grinds. Kept in data so
+  // the featured excerpt and the full list can never drift apart.
   const order = [28, 1, 2, 14, 15, 25, 33, 40];
   return trophiesByIds(doc, order);
 }

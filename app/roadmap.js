@@ -1,8 +1,8 @@
-// Roadmap renderer for the Leonida 100% guide: turns the six stages in
-// trophies.json into a timeline of stage cards, masking hidden trophy names
-// while the spoiler setting is on and counting each stage's earned trophies.
-// A stage card shows its chapter range, its trophy count, the trophies it
-// holds, and a flag on any missable or do-early step inside it.
+// Roadmap painting for the Leonida 100% guide: turns the six stages in
+// trophies.json into a timeline of stage cards, masking hidden trophy
+// names while the spoiler setting is on and counting each stage's earned
+// trophies. A stage card shows its chapter range, its trophy count, the
+// trophies it holds, and a flag on any missable or do-early step inside it.
 import { trophiesByIds } from './data.js';
 import { earnedCountFor } from './tracker.js';
 
@@ -29,12 +29,19 @@ export function renderRoadmap(doc, isEarned, spoilersHidden) {
   }
 }
 
-// Gated steps first: a missable trophy, then a do-early one, then the rest
-// in list order — so the flag a reader must act on is the first thing they
-// see in the stage, not buried at the end of its names.
+// Gated steps first: a missable trophy, then a do-early one, then the
+// rest in list order — so the flag a reader must act on is the first thing
+// they see in the stage, not buried at the end of its names.
 export function sortStageTrophies(trophies) {
   const rank = (t) => (t.missable ? 0 : t.timeSensitive ? 1 : 2);
   return [...trophies].sort((a, b) => rank(a) - rank(b) || a.id - b.id);
+}
+
+function makeFlagEl(flagText) {
+  const flagEl = document.createElement('span');
+  flagEl.className = 'flag';
+  flagEl.textContent = flagText;
+  return flagEl;
 }
 
 export function renderStageCard(doc, stage, earnedSet, spoilersHidden) {
@@ -86,12 +93,7 @@ export function appendStageNames(namesEl, trophies, isEarned, spoilersHidden) {
     span.className = 't-name';
     span.textContent = hiddenRun === 1 ? 'Hidden trophy' : `Hidden trophy ×${hiddenRun}`;
     namesEl.append(span);
-    if (hiddenRunFlag) {
-      const flagEl = document.createElement('span');
-      flagEl.className = 'flag';
-      flagEl.textContent = hiddenRunFlag;
-      namesEl.append(flagEl);
-    }
+    if (hiddenRunFlag) namesEl.append(makeFlagEl(hiddenRunFlag));
     namesEl.append(document.createTextNode(' · '));
     hiddenRun = 0;
     hiddenRunFlag = null;
@@ -110,12 +112,7 @@ export function appendStageNames(namesEl, trophies, isEarned, spoilersHidden) {
     span.textContent = t.name;
     namesEl.append(span);
     const flag = stageFlagFor(t);
-    if (flag) {
-      const flagEl = document.createElement('span');
-      flagEl.className = 'flag';
-      flagEl.textContent = flag;
-      namesEl.append(flagEl);
-    }
+    if (flag) namesEl.append(makeFlagEl(flag));
     namesEl.append(document.createTextNode(' · '));
   }
   flushHiddenRun();
