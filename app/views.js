@@ -1,228 +1,346 @@
-// views.js — every visible section of the guide, rendered from
-// app/data/trophies.json plus the tracker state. Pure string builders:
-// app.js owns events, URL state and scrolling.
+// renderGuideViews — every visible part of the guide, built from the data file, the
+// audit numbers and the saved progress. Rows are built with DOM calls, never with
+// HTML strings, so a trophy name can never break the page. Large type on the audit
+// strip and on the first checklist rows is deliberate: the cover shrinks to 768x480
+// in the dossier, and small type dies there.
+import { GRADE_LABELS, TIER_LABELS, formatCounterValue, formatCounterTarget, isSpoilerTrophy } from './classify.js';
+import { auditStripLines } from './audit.js';
 
-import { SOURCES, STAGES, FEATURED_IDS, MISSABLE_AUDIT, SOURCES_READ_DATE, computeAudit, sourceName } from './audit.js';
-import { isEarned, counterValue } from './store.js';
-
-export function esc(s) {
-  return String(s ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined && text !== null) node.textContent = text;
+  return node;
 }
 
-export function gradeChip(grade) {
-  const map = { platinum: 'PLATINUM', gold: 'GOLD', silver: 'SILVER', bronze: 'BRONZE' };
-  return '<span class="chip grade-' + grade + '">' + (map[grade] || grade.toUpperCase()) + '</span>';
+function chip(text, className) {
+  return el('span', 'chip ' + className, text);
 }
 
-export function kindLabel(kind) {
-  const map = { story: 'Story', missable: 'Missable', collectibles: 'Collectibles', activities: 'Activities', online: 'Online', platinum: 'Platinum' };
-  return map[kind] || kind;
+// The audit strip: four big numbers the cover is built around.
+export function renderAuditStrip(container, audit, sourceCount) {
+  container.replaceChildren();
+  for (const line of auditStripLines(audit, sourceCount)) {
+    const stat = el('div', 'stat');
+    stat.append(el('div', 'stat-big', line.big), el('div', 'stat-small', line.small));
+    container.append(stat);
+  }
 }
 
-export function isMasked(t, state) {
-  return t.hidden && state.spoilers === 'hidden' && !isEarned(state, t.id);
+// Platinum bar + gold bar, with the earned counts in large type.
+export function renderGoalBar(container, audit) {
+  container.replaceChildren();
+  const platinum = el('div', 'goal');
+  const platPct = audit.total ? Math.round((audit.earned / audit.total) * 100) : 0;
+  platinum.append(el('div', 'goal-label', 'PLATINUM — Vice Got a Price!'));
+  platinum.append(el('div', 'goal-num', audit.earned + ' / ' + audit.total + ' trophies · ' + platPct + '%'));
+  const platBar = el('div', 'bar');
+  platBar.append(el('div', 'bar-fill'));
+  platBar.firstChild.style.width = platPct + '%';
+  platinum.append(platBar);
+  const goldTotal = audit.gradeTotal.gold ?? 0;
+  const goldEarned = audit.gradeEarned.gold ?? 0;
+  const gold = el('div', 'goal');
+  gold.append(el('div', 'goal-label', 'GOLD — final mission + 100% completion'));
+  gold.append(el('div', 'goal-num', goldEarned + ' / ' + goldTotal + ' gold'));
+  const goldBar = el('div', 'bar');
+  goldBar.append(el('div', 'bar-fill gold-fill'));
+  goldBar.firstChild.style.width = (goldTotal ? Math.round((goldEarned / goldTotal) * 100) : 0) + '%';
+  gold.append(goldBar);
+  container.append(platinum, gold);
 }
 
-export function displayName(t, state) {
-  return isMasked(t, state) ? 'Hidden trophy' : t.name;
+// Chapter chips S1–S7 with earned counts; clicking one filters the checklist to it.
+export function renderStageChips(container, stages, audit, activeStage, onSelect) {
+  container.replaceChildren();
+  const all = el('button', 'stage-chip' + (activeStage === 'all' ? ' active' : ''), 'All · ' + audit.earned + '/' + audit.total);
+  all.type = 'button';
+  all.addEventListener('click', () => onSelect('all'));
+  container.append(all);
+  for (const stage of stages) {
+    const earned = audit.stageEarned[stage.id] ?? 0;
+    const total = audit.stageTotal[stage.id] ?? 0;
+    const button = el('button', 'stage-chip' + (activeStage === stage.id ? ' active' : ''), stage.id + ' · ' + earned + '/' + total);
+    button.type = 'button';
+    button.title = stage.name + ' — ' + stage.blurb;
+    button.addEventListener('click', () => onSelect(stage.id));
+    container.append(button);
+  }
 }
 
-export function displayDesc(t, state) {
-  return isMasked(t, state) ? 'Earn this trophy to reveal its name and description.' : t.description;
+function sourceLink(source) {
+  if (source.url) {
+    const a = document.createElement('a');
+    a.href = source.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = source.name;
+    return a;
+  }
+  return el('span', '', source.name);
 }
 
-export function flagChips(t) {
-  let out = '';
-  if (t.missable) out += '<span class="chip flag-missable">POSSIBLY MISSABLE</span>';
-  if (t.doEarly) out += '<span class="chip flag-doearly">DO EARLY</span>';
-  if (t.watch) out += '<span class="chip flag-watch">WATCH</span>';
-  if (t.disagree) out += '<span class="chip flag-disagree">SOURCES DISAGREE</span>';
-  if (t.hidden) out += '<span class="chip flag-hidden">HIDDEN</span>';
-  return out;
-}
+// One checklist row: a single dense line — checkbox, name, official description,
+// counter where the trophy has a count, grade + tier chips, and the Guide toggle —
+// with the numbered, cited guide expanding below it. One line per trophy keeps
+// eight rows on the cover at dossier scale, where tall rows would show only four.
+export function renderTrophyRow(trophy, state, sourcesById, expanded, callbacks) {
+  const masked = state.spoilerOn() && isSpoilerTrophy(trophy) && !state.isEarned(trophy);
+  const row = el('article', 'trophy-row' + (state.isEarned(trophy) ? ' earned' : ''));
+  row.id = 'trophy-' + trophy.id;
+  row.dataset.trophyId = String(trophy.id);
 
-export function renderAuditStrip(trophies) {
-  const a = computeAudit(trophies);
-  const g = a.grades;
-  const cells = [
-    ['55', 'official trophies'],
-    ['1P 2G 6S 46B', g.platinum + ' platinum · ' + g.gold + ' gold · ' + g.silver + ' silver · ' + g.bronze + ' bronze'],
-    [String(a.hidden), 'hidden until earned'],
-    [a.withSource + '/55', 'guides cite a source'],
-    [a.stepsCited + '/' + a.stepsTotal, 'steps cited'],
-    ['7', 'sources read ' + SOURCES_READ_DATE],
-    [String(a.missableCount), 'possibly missable'],
-    [String(a.watchCount), 'watch'],
-    [String(a.unconfirmedCount), 'unconfirmed'],
-    [String(a.singleSourceCount), 'single-source'],
-    [String(a.disagreeCount), 'disagree'],
-  ];
-  return '<div class="audit-strip" role="status">' + cells.map(([n, l]) =>
-    '<div class="audit-cell"><span class="audit-num">' + esc(n) + '</span><span class="audit-label">' + esc(l) + '</span></div>').join('') + '</div>';
-}
-
-export function renderProgress(trophies, state) {
-  const earned = state.earned.length;
-  const total = trophies.length;
-  const pct = Math.round((earned / total) * 100);
-  const golds = trophies.filter((t) => t.grade === 'gold');
-  const goldEarned = golds.filter((t) => isEarned(state, t.id)).length;
-  const goldPct = Math.round((goldEarned / golds.length) * 100);
-  const bar = (p) => '<div class="goalbar"><div class="goalbar-fill" style="width:' + p + '%"></div></div>';
-  return '<div class="progress-wrap">'
-    + '<div class="progress-line"><span class="progress-big">' + earned + ' / ' + total + '</span><span class="progress-note">trophies earned · ' + pct + '% to platinum</span></div>'
-    + bar(pct)
-    + '<div class="progress-line sub"><span>Platinum goal — Vice Got a Price! needs the other 54</span><span>' + goldEarned + ' / ' + golds.length + ' gold · ' + goldPct + '%</span></div>'
-    + bar(goldPct)
-    + '</div>';
-}
-
-export function trophyRow(t, state) {
-  const earned = isEarned(state, t.id);
-  const masked = isMasked(t, state);
-  const counter = t.count ? '<span class="row-count">' + counterValue(state, t.id) + ' / ' + t.count.target + ' ' + esc(t.count.unit) + '</span>' : '';
-  return '<article class="trow' + (earned ? ' earned' : '') + (masked ? ' masked' : '') + '" id="row-' + t.id + '" data-trophy="' + t.id + '" tabindex="0">'
-    + '<button class="tick" data-tick="' + t.id + '" aria-pressed="' + earned + '" title="' + (earned ? 'Mark as not earned' : 'Mark as earned') + '">' + (earned ? '✓' : '') + '</button>'
-    + '<div class="trow-main"><div class="trow-title">' + esc(displayName(t, state)) + ' ' + gradeChip(t.grade) + '</div>'
-    + '<div class="trow-desc">' + esc(displayDesc(t, state)) + '</div>'
-    + '<div class="trow-meta">' + flagChips(t)
-    + '<span class="chip kind-chip">' + esc(kindLabel(t.kind)) + '</span>'
-    + '<span class="chip stage-chip">S' + t.stage + '</span>' + counter + '</div></div>'
-    + '<button class="open" data-open="' + t.id + '">Guide →</button>'
-    + '</article>';
-}
-
-export function applyFilters(trophies, state, ui) {
-  const q = (ui.q || '').trim().toLowerCase();
-  return trophies.filter((t) => {
-    if (ui.kind && ui.kind !== 'all' && t.kind !== ui.kind) return false;
-    if (ui.grade && ui.grade !== 'all' && t.grade !== ui.grade) return false;
-    if (ui.earnedOnly && !isEarned(state, t.id)) return false;
-    if (q) {
-      const masked = isMasked(t, state);
-      const hay = masked ? '' : (t.name + ' ' + t.description + ' ' + t.guide + ' ' + (t.steps || []).map((s) => s.text).join(' ')).toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    return true;
+  const check = el('label', 'check');
+  const box = document.createElement('input');
+  box.type = 'checkbox';
+  box.checked = state.isEarned(trophy);
+  box.setAttribute('aria-label', 'Earned: ' + trophy.name);
+  box.addEventListener('change', () => {
+    state.setEarned(trophy, box.checked);
+    callbacks.onProgress();
   });
-}
+  check.append(box, el('span', 'check-mark', state.isEarned(trophy) ? '✓' : ''));
+  row.append(check);
 
-export function renderChecklist(trophies, state, ui) {
-  const list = applyFilters(trophies, state, ui);
-  const earnedShown = list.filter((t) => isEarned(state, t.id)).length;
-  let html = '<p class="section-count">' + list.length + ' of 55 trophies shown · ' + earnedShown + ' earned in this view</p>';
-  if (list.length === 0) html += '<p class="empty">No trophies match these filters. Clear the search or widen the filters.</p>';
-  html += list.map((t) => trophyRow(t, state)).join('');
-  return html;
-}
-
-export function renderFeatured(trophies, state) {
-  const rows = FEATURED_IDS.map((id) => trophies.find((t) => t.id === id)).filter(Boolean);
-  return rows.map((t) => {
-    const why = {
-      28: 'The one trophy that can be missed — do the Chapter 1 balcony meditation.',
-      40: 'Do early: the Chapter 4 optional mission unlocks all bank vaults.',
-      41: 'Do early: the same mission counts as robbing an armored truck.',
-      46: 'Do early: the Chapter 2 optional mission holds the 3 valuables.',
-      14: 'The hardest trophy — the 100% checklist, done last.',
-      1: 'The platinum: earn the other 54 and this pops.',
-      15: '250 stunts of 397 — under-bridge flights are fastest.',
-      17: 'Gold in all 42 Shooting Range challenges.',
-    }[t.id] || '';
-    return '<button class="feat-row" data-open="' + t.id + '"><span class="feat-id">#' + t.id + '</span>'
-      + '<span class="feat-name">' + esc(displayName(t, state)) + '</span>' + gradeChip(t.grade)
-      + '<span class="feat-why">' + esc(why) + '</span></button>';
-  }).join('');
-}
-
-export function renderRoadmap(trophies, state) {
-  return STAGES.map((st) => {
-    const members = trophies.filter((t) => t.stage === st.n);
-    const earned = members.filter((t) => isEarned(state, t.id)).length;
-    const flags = members.filter((t) => t.missable || t.doEarly).map((t) =>
-      '<span class="chip ' + (t.missable ? 'flag-missable' : 'flag-doearly') + '">' + (t.missable ? 'MISSABLE' : 'DO EARLY') + ' · ' + esc(displayName(t, state)) + '</span>').join('');
-    return '<section class="stage-card" id="stage-' + st.n + '">'
-      + '<div class="stage-num">S' + st.n + '</div>'
-      + '<div class="stage-body"><h3>' + esc(st.title) + '</h3><p class="stage-sub">' + esc(st.sub) + '</p>'
-      + '<p class="stage-count">' + earned + ' / ' + members.length + ' earned</p>'
-      + '<div class="stage-flags">' + flags + '</div>'
-      + '<ul class="stage-list">' + members.map((t) =>
-        '<li data-open="' + t.id + '"' + (isEarned(state, t.id) ? ' class="done"' : '') + '><span class="stage-li-num">#' + t.id + '</span> ' + esc(displayName(t, state)) + '</li>').join('') + '</ul>'
-      + '</div></section>';
-  }).join('');
-}
-
-export function renderNextUp(trophies, state) {
-  const order = [...trophies].sort((a, b) => (a.stage - b.stage) || (a.id - b.id));
-  const next = order.filter((t) => !isEarned(state, t.id)).slice(0, 3);
-  if (next.length === 0) return '<p class="nextup-done">Every trophy is earned. Vice Got a Price! is yours.</p>';
-  return next.map((t) => {
-    const first = (t.steps && t.steps[0]) ? t.steps[0].text : t.guide;
-    return '<div class="nextup-row" data-open="' + t.id + '"><span class="nextup-stage">S' + t.stage + ' · #' + t.id + '</span>'
-      + '<span class="nextup-name">' + esc(displayName(t, state)) + '</span>' + gradeChip(t.grade)
-      + '<span class="nextup-step">' + esc(first) + '</span></div>';
-  }).join('');
-}
-
-export function renderDetail(t, state) {
-  if (!t) return '<p class="empty">Select a trophy from the checklist or the roadmap to read its guide.</p>';
-  const masked = isMasked(t, state);
-  const earned = isEarned(state, t.id);
-  let html = '<div class="detail-head"><h3>' + esc(displayName(t, state)) + '</h3>' + gradeChip(t.grade)
-    + '<span class="chip kind-chip">' + esc(kindLabel(t.kind)) + '</span><span class="chip stage-chip">Stage S' + t.stage + '</span>' + flagChips(t) + '</div>'
-    + '<p class="detail-desc">' + esc(displayDesc(t, state)) + '</p>';
-  if (masked) {
-    html += '<p class="detail-masked">Spoilers are hidden. This is a hidden trophy — tick it as earned (or switch spoilers to Shown) to reveal its guide.</p>';
-    return html;
+  const main = el('div', 'row-main');
+  const line = el('div', 'row-line');
+  line.append(el('h3', 'row-name', masked ? 'Hidden trophy' : trophy.name));
+  line.append(el('p', 'row-desc', masked ? 'Hidden on PlayStation until earned.' : trophy.description));
+  if (trophy.counter) {
+    const counter = el('div', 'counter');
+    const minus = el('button', 'counter-btn', '−');
+    minus.type = 'button';
+    minus.setAttribute('aria-label', 'Decrease ' + trophy.name);
+    minus.addEventListener('click', () => {
+      state.bumpCounter(trophy, -1);
+      callbacks.onProgress();
+    });
+    const plus = el('button', 'counter-btn', '+');
+    plus.type = 'button';
+    plus.setAttribute('aria-label', 'Increase ' + trophy.name);
+    plus.addEventListener('click', () => {
+      state.bumpCounter(trophy, 1);
+      callbacks.onProgress();
+    });
+    const value = el('span', 'counter-value', formatCounterValue(trophy, state.counterValue(trophy)) + ' / ' + formatCounterTarget(trophy));
+    counter.append(minus, value, plus);
+    line.append(counter);
   }
-  html += '<p class="detail-guide">' + esc(t.guide) + '</p>';
-  if (t.missable) {
-    html += '<aside class="missable-box"><h4>WHY IT CAN BE MISSED</h4><p>After the mission Down to Earth, Lucia meditates on the balcony of Jason’s house in Chapter 1 — and that moment disappears once Chapter 1 ends. PowerPyx calls it “Potentially 1” and OutputLog agrees: it counts toward the trophy, and it is still unconfirmed whether the trophy strictly needs it. Do it, and keep a Chapter 1 save until the trophy pops.</p><p class="box-src">Sources: PowerPyx [1], OutputLog [2], KeenGamer [3], EGamers [4], GTA-Zone [6]</p></aside>';
+  const chips = el('span', 'row-chips');
+  chips.append(chip(GRADE_LABELS[trophy.grade], 'grade-' + trophy.grade));
+  if (trophy.hidden) chips.append(chip('HIDDEN', 'flag-hidden'));
+  if (trophy.tier !== 'none') chips.append(chip(TIER_LABELS[trophy.tier], 'flag-' + trophy.tier));
+  line.append(chips);
+  const toggle = el('button', 'guide-toggle', expanded ? 'Guide ▾' : 'Guide ▸');
+  toggle.type = 'button';
+  toggle.addEventListener('click', () => callbacks.onToggleGuide(trophy));
+  line.append(toggle);
+  main.append(line);
+
+  if (expanded) {
+    if (masked) {
+      main.append(el('p', 'guide-masked', 'Guide hidden until earned — the spoiler setting masks story trophies.'));
+    } else {
+      const guide = el('div', 'guide');
+      const steps = el('ol', 'steps');
+      for (const step of trophy.steps ?? []) {
+        const li = document.createElement('li');
+        li.append(document.createTextNode(step.t));
+        for (const srcId of step.src ?? []) {
+          const mark = el('sup', 'src-mark', '[' + srcId + ']');
+          mark.title = sourcesById.get(srcId)?.name ?? 'Source ' + srcId;
+          li.append(document.createTextNode(' '), mark);
+        }
+        steps.append(li);
+      }
+      guide.append(steps);
+      const srcLine = el('p', 'guide-sources', 'Sources: ');
+      trophy.sources.forEach((srcId, index) => {
+        if (index > 0) srcLine.append(document.createTextNode(' · '));
+        const source = sourcesById.get(srcId);
+        if (source) {
+          const mark = el('span', 'src-ref', '[' + srcId + '] ');
+          srcLine.append(mark, sourceLink(source));
+        }
+      });
+      guide.append(srcLine);
+      main.append(guide);
+    }
   }
-  if (t.disagree) {
-    html += '<aside class="disagree-box"><h4>SOURCES DISAGREE · BOTH VERSIONS SHOWN</h4><p>' + esc(t.disagree) + '</p></aside>';
-  }
-  if (t.watch) {
-    html += '<aside class="watch-box"><h4>WATCH — TRIGGER UNCONFIRMED</h4><p>The trigger for this trophy is not yet confirmed by the sources. The guide above gives the best current lead; treat it as a lead, not a confirmed method, and re-check the sources as launch-era reports come in.</p></aside>';
-  }
-  html += '<ol class="steps">' + (t.steps || []).map((s) =>
-    '<li>' + esc(s.text.replace(/\s*\[[0-9]\]/g, '')) + ' ' + (s.sources || []).map((sid) => '<a class="srcref" href="#sources" data-source="' + sid + '">[' + sid + ']</a>').join(' ') + '</li>').join('') + '</ol>';
-  if (t.count) {
-    const v = counterValue(state, t.id);
-    const pct = Math.round((v / t.count.target) * 100);
-    html += '<div class="counter" data-counter="' + t.id + '"><span class="counter-label">Your count</span>'
-      + '<button data-dec="' + t.id + '" aria-label="Decrease count">−</button>'
-      + '<span class="counter-value">' + v + ' / ' + t.count.target + ' ' + esc(t.count.unit) + '</span>'
-      + '<button data-inc="' + t.id + '" aria-label="Increase count">+</button>'
-      + '<div class="counter-bar"><div class="counter-fill" style="width:' + pct + '%"></div></div>'
-      + '<span class="counter-hint">' + (v >= t.count.target ? 'Target reached — tick the trophy above when it pops in-game.' : 'Step: ±' + t.count.step + ' ' + esc(t.count.unit) + ' per tap.') + '</span></div>';
-  }
-  html += '<p class="detail-sources">Sources for this guide: ' + (t.sources || []).map((sid) => '<a href="#sources" data-source="' + sid + '">' + esc(sourceName(sid)) + ' [' + sid + ']</a>').join(' · ') + '</p>';
-  html += '<button class="tick-big" data-tick="' + t.id + '">' + (earned ? '✓ Earned — tap to unmark' : 'Mark as earned') + '</button>';
-  return html;
+  row.append(main);
+  return row;
 }
 
-export function renderSources(trophies) {
-  const a = computeAudit(trophies);
-  return SOURCES.map((s) => {
-    const n = a.citedBy.get(s.id) || 0;
-    return '<div class="source-row"><span class="source-id">[' + s.id + ']</span>'
-      + '<span class="source-name">' + esc(s.name) + '</span>'
-      + '<span class="source-note">' + esc(s.note) + '</span>'
-      + '<span class="source-cited">cited by ' + n + ' of 55 guides</span>'
-      + '<a class="source-url" href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.url.replace('https://', '')) + '</a></div>';
-  }).join('') + '<p class="sources-foot">All 7 sources read ' + SOURCES_READ_DATE + '. Guide text is written in this entry’s own words; sources are cited, never copied. Official trophy names, descriptions and grades are shown as PlayStation publishes them.</p>';
+// The checklist itself, in stage order, filtered by the controls.
+export function renderChecklist(container, emptyNote, trophies, state, sourcesById, filters, expandedIds, callbacks) {
+  container.replaceChildren();
+  let shown = 0;
+  for (const trophy of trophies) {
+    if (!filters.match(trophy)) continue;
+    shown += 1;
+    container.append(renderTrophyRow(trophy, state, sourcesById, expandedIds.has(trophy.id), callbacks));
+  }
+  if (shown === 0) {
+    emptyNote.textContent = 'No trophies match these filters — clear the search or pick another kind.';
+    emptyNote.hidden = false;
+  } else {
+    emptyNote.hidden = true;
+  }
+  return shown;
 }
 
-export function renderMissableAudit() {
-  return MISSABLE_AUDIT.map((row) =>
-    '<div class="audit-row"><span class="chip ' + (row.verdict === 'CLEARED' ? 'flag-cleared' : 'flag-watch') + '">' + row.verdict + '</span>'
-    + '<span class="audit-row-name">' + esc(row.name) + '</span>'
-    + '<span class="audit-row-why">' + esc(row.why) + '</span>'
-    + '<span class="audit-row-src">' + row.sources.map((sid) => '[' + sid + ']').join(' ') + '</span></div>').join('')
-    + '<p class="audit-foot">Verdict: 1 possibly missable trophy (Positive Mental Attitude), 3 do-early, 3 on watch. No other trophy has a closing window in any source read ' + SOURCES_READ_DATE + '.</p>';
+// The roadmap: the three PowerPyx steps, the seven stages with their trophies, and
+// the ground rules (saves, cheats, free-roam). The missable panel sits at its top,
+// so the roadmap screenshot shows both judging criteria at once.
+export function renderRoadmap(container, data, audit) {
+  container.replaceChildren();
+  const byId = new Map(data.trophies.map((t) => [t.id, t]));
+
+  const intro = document.createElement('div');
+  intro.className = 'roadmap-intro';
+  const introTitle = document.createElement('h3');
+  introTitle.textContent = 'The road to platinum — about 200 hours, difficulty 4/10, one playthrough';
+  intro.append(introTitle);
+  const steps = document.createElement('ol');
+  steps.className = 'roadmap-steps';
+  const roadmapSteps = [
+    { t: 'Step 1 — Story + optional missions, 60–80 hours. ', s: 'Finish the story, pick up optional missions as they appear, scan vehicles with WAiNK and study animals through the binoculars. [1][3]' },
+    { t: 'Step 2 — 100% Completion Checklist + 70 of 80 Challenges, about 100 hours. ', s: 'After the story, open Progress > Stats > 100% Completion. Only 70 of 80 Challenges are needed. [1]' },
+    { t: 'Step 3 — Strangers & Freaks and cleanup, about 10 hours. ', s: 'Finish the 8 qualifying stranger strands and whatever trophies are left. [1][3]' },
+  ];
+  for (const step of roadmapSteps) {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = step.t;
+    li.append(strong, document.createTextNode(step.s));
+    steps.append(li);
+  }
+  intro.append(steps);
+  const rules = document.createElement('p');
+  rules.className = 'roadmap-rules';
+  rules.textContent = 'Ground rules: no mission replay and no New Game+, so keep a manual save at the start of every chapter (15 slots plus autosave). Cheats disable trophies and saving — keep them off the platinum save. Everything outside the story stays available in free-roam after the credits. [1][2]';
+  intro.append(rules);
+  container.append(intro);
+
+  const missable = document.createElement('div');
+  missable.className = 'missable-panel';
+  missable.id = 'missable-panel';
+  const missTitle = document.createElement('h3');
+  missTitle.textContent = 'Missable — 1 verified · Do early — 6 · Watch — 11';
+  missable.append(missTitle);
+  const missBody = document.createElement('p');
+  missBody.textContent = 'Only one trophy is verified missable: Positive Mental Attitude, for meditating at every spot — the first meditation, on the balcony at Jason\u2019s house in Chapter 1, disappears when the chapter ends. [1][2] Six more are chapter-gated, so start them early: the five stranger-chain finales (Andy, Kenton, Billy, Randy, Tyrone) plus Maximum Withdrawal, whose vaults open in Chapter 4. Eleven trophies sit in the WATCH tier — their triggers are still unconfirmed in the guides, so this guide shows both versions instead of guessing.';
+  missable.append(missBody);
+  const tierList = document.createElement('ul');
+  tierList.className = 'tier-list';
+  const tiers = [
+    ['MISSABLE (1): ', data.trophies.filter((t) => t.tier === 'missable').map((t) => t.name).join(', ')],
+    ['DO EARLY (6): ', data.trophies.filter((t) => t.tier === 'do-early').map((t) => t.name).join(', ')],
+    ['WATCH (11): ', data.trophies.filter((t) => t.tier === 'watch').map((t) => t.name).join(', ')],
+  ];
+  for (const [label, names] of tiers) {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = label;
+    li.append(strong, document.createTextNode(names));
+    tierList.append(li);
+  }
+  missable.append(tierList);
+  container.append(missable);
+
+  const stageGrid = document.createElement('div');
+  stageGrid.className = 'stage-grid';
+  for (const stage of data.stages) {
+    const card = document.createElement('div');
+    card.className = 'stage-card';
+    card.id = 'stage-' + stage.id;
+    const earned = audit.stageEarned[stage.id] ?? 0;
+    const total = audit.stageTotal[stage.id] ?? 0;
+    const title = document.createElement('h4');
+    title.textContent = stage.id + ' — ' + stage.name + ' · ' + earned + '/' + total;
+    card.append(title);
+    const blurb = document.createElement('p');
+    blurb.className = 'stage-blurb';
+    blurb.textContent = stage.blurb;
+    card.append(blurb);
+    const list = document.createElement('ul');
+    list.className = 'stage-trophies';
+    for (const trophy of data.trophies.filter((t) => t.stage === stage.id)) {
+      const li = document.createElement('li');
+      const grade = document.createElement('span');
+      grade.className = 'mini-grade grade-' + trophy.grade;
+      grade.textContent = trophy.grade === 'platinum' ? 'P' : trophy.grade === 'gold' ? 'G' : trophy.grade === 'silver' ? 'S' : 'B';
+      li.append(grade, document.createTextNode(' ' + trophy.name));
+      if (byId.has(trophy.id) && trophy.tier !== 'none') {
+        const tier = document.createElement('span');
+        tier.className = 'mini-tier flag-' + trophy.tier;
+        tier.textContent = ' ' + trophy.tier.toUpperCase();
+        li.append(tier);
+      }
+      list.append(li);
+    }
+    card.append(list);
+    stageGrid.append(card);
+  }
+  container.append(stageGrid);
+}
+
+// The Sources panel: all seven sources, each with its link and its citation count,
+// plus the two places the sources disagree — both versions shown, never picked.
+export function renderSourcesPanel(container, data, audit) {
+  container.replaceChildren();
+  const title = document.createElement('h3');
+  title.textContent = 'Sources — 7 guides read 21 Nov 2026';
+  container.append(title);
+  const table = document.createElement('table');
+  table.className = 'sources-table';
+  const head = document.createElement('tr');
+  for (const h of ['#', 'Source', 'Cited by']) {
+    const th = document.createElement('th');
+    th.textContent = h;
+    head.append(th);
+  }
+  table.append(head);
+  for (const source of audit.sourceCitations) {
+    const tr = document.createElement('tr');
+    const num = document.createElement('td');
+    num.textContent = '[' + source.id + ']';
+    const name = document.createElement('td');
+    if (source.url) {
+      const a = document.createElement('a');
+      a.href = source.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = source.name;
+      name.append(a);
+    } else {
+      name.textContent = source.name;
+    }
+    const note = document.createElement('span');
+    note.className = 'source-note';
+    note.textContent = ' — ' + source.note;
+    name.append(note);
+    const cited = document.createElement('td');
+    cited.textContent = source.citedBy + ' of 55 guides';
+    tr.append(num, name, cited);
+    table.append(tr);
+  }
+  container.append(table);
+  const disagree = document.createElement('div');
+  disagree.className = 'disagree-box';
+  const disagreeTitle = document.createElement('h4');
+  disagreeTitle.textContent = 'Sources disagree · both versions shown';
+  disagree.append(disagreeTitle);
+  const disagreeList = document.createElement('ul');
+  for (const item of [
+    'Meditation spots: the trophy needs 18 spots, the 100% checklist 15 — this guide counts 18 and says so. [4]',
+    'Final mission wording: some guides call the finale Chapter 5, others do not — both wordings are shown. [4]',
+    'Five hidden trophies are still unconfirmed (In The Beginning…, Capital Offense, Bad Luck, I Guess, The Truth Is Out There, Ten Pin) and Fair Game\u2019s animal is unknown — they sit in the WATCH tier. [4]',
+  ]) {
+    const li = document.createElement('li');
+    li.textContent = item;
+    disagreeList.append(li);
+  }
+  disagree.append(disagreeList);
+  container.append(disagree);
 }

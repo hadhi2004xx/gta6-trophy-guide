@@ -1,114 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leonida 100% — GTA VI Trophy Guide &amp; Tracker</title>
-<meta name="description" content="Offline guide and tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5: cited step-by-step guides, a 7-stage roadmap to the platinum, and a saved checklist.">
+<meta name="description" content="Offline guide and tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5: cited guides, roadmap to the platinum, missable flags, saved progress.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<p id="app-error" role="alert"></p>
-
-<header class="masthead">
-  <div class="masthead-inner">
-    <p class="kicker">GRAND THEFT AUTO VI · PLAYSTATION 5 · OFFLINE GUIDE</p>
-    <h1>Leonida 100%</h1>
-    <p class="subtitle">Every one of the 55 trophies — official name, description and grade — with a cited step-by-step guide, a 7-stage roadmap to the platinum, and a tracker that saves your progress in this browser.</p>
-    <p class="masthead-facts">55 trophies · 1 platinum · 2 gold · 6 silver · 46 bronze · 28 hidden · 0 online · ~200 hours · 1 playthrough</p>
-  </div>
+<header class="masthead" id="top">
+  <p class="kicker">GRAND THEFT AUTO VI · PLAYSTATION 5 · OFFLINE GUIDE &amp; TRACKER</p>
+  <h1>LEONIDA 100%</h1>
+  <p class="sub">All 55 trophies — official name, description and grade, a cited guide, and a tracker that saves.</p>
+  <p class="totals">55 trophies · 1 platinum · 2 gold · 6 silver · 46 bronze · 28 hidden · 0 online · ~200 h · difficulty 4/10 · 1 playthrough</p>
 </header>
 
-<div id="audit-strip"></div>
-<p id="audit-note" class="audit-note"></p>
-
-<section id="progress-section" aria-label="Progress">
-  <div id="progress"></div>
-</section>
+<section class="audit" id="audit-strip" aria-label="Audit strip"></section>
 
 <div class="controls" id="controls">
-  <div class="controls-inner">
-    <label class="ctl search-ctl">Search <input id="search" type="search" placeholder="Trophy name, place, or step…" autocomplete="off"></label>
-    <label class="ctl">Kind
-      <select id="kind-filter">
-        <option value="all">All kinds</option>
-        <option value="story">Story</option>
-        <option value="missable">Missable</option>
-        <option value="collectibles">Collectibles</option>
-        <option value="activities">Activities</option>
-        <option value="platinum">Platinum</option>
-        <option value="online">Online (0)</option>
-      </select>
-    </label>
-    <label class="ctl">Grade
-      <select id="grade-filter">
-        <option value="all">All grades</option>
-        <option value="platinum">Platinum</option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="bronze">Bronze</option>
-      </select>
-    </label>
-    <label class="ctl check-ctl"><input id="earned-only" type="checkbox"> Earned only</label>
-    <button id="spoiler-toggle" class="btn" aria-pressed="false">Spoilers: Hidden</button>
-    <span class="view-tabs" role="tablist" aria-label="View">
-      <button class="btn view-tab active" data-view-tab="checklist" role="tab">Checklist</button>
-      <button class="btn view-tab" data-view-tab="roadmap" role="tab">Roadmap</button>
-    </span>
-    <span class="file-btns">
-      <button id="export-btn" class="btn">Export JSON</button>
-      <button id="import-btn" class="btn">Import JSON</button>
-      <input id="import-file" type="file" accept="application/json,.json" hidden>
-      <button id="reset-btn" class="btn danger">Reset</button>
-    </span>
-    <span id="import-status" class="import-status" role="status"></span>
-  </div>
+  <input id="search" type="search" placeholder="Search a trophy…" aria-label="Search trophies">
+  <label>Kind
+    <select id="filter-kind">
+      <option value="all">All kinds</option>
+    </select>
+  </label>
+  <label>Grade
+    <select id="filter-grade">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label>Progress
+    <select id="filter-earned">
+      <option value="all">All</option>
+      <option value="earned">Earned</option>
+      <option value="missing">Not earned</option>
+    </select>
+  </label>
+  <label class="spoiler-label"><input id="spoiler-toggle" type="checkbox" checked> Spoilers hidden</label>
+  <span class="controls-spacer"></span>
+  <button id="view-checklist" type="button">Checklist</button>
+  <button id="view-roadmap" type="button">Roadmap</button>
+  <button id="view-sources" type="button">Sources</button>
+  <button id="export-btn" type="button">Export</button>
+  <label class="import-label">Import <input id="import-file" type="file" accept="application/json"></label>
+  <button id="reset-btn" type="button">Reset</button>
 </div>
+<p class="status-line" id="status-line" role="status"></p>
 
 <main>
-  <section id="nextup-section" aria-label="Next up">
-    <h2>Next up — in roadmap order</h2>
-    <div id="nextup"></div>
-  </section>
-
-  <section id="featured-section" aria-label="Start here">
-    <h2>Start here — the 8 trophies that decide the run</h2>
-    <div id="featured"></div>
-  </section>
-
   <section id="checklist-section" aria-label="Trophy checklist">
-    <h2>Trophy checklist <span class="h2-note">55 official trophies · tick to save · click Guide for the steps</span></h2>
-    <div id="checklist"></div>
+    <div class="section-head">
+      <h2>Checklist — 55 trophies</h2>
+      <p class="section-meta"><span id="progress-line">0 of 55 earned</span> · <span id="shown-line">55 of 55 shown</span></p>
+    </div>
+    <p class="section-note">Tick a trophy when it pops — progress saves in this browser. Counters track the counted trophies; guides are numbered steps, each with its source.</p>
+    <div id="rows"></div>
+    <p id="empty-note" hidden></p>
   </section>
 
-  <section id="roadmap" aria-label="Roadmap to the platinum">
-    <h2>Roadmap to the platinum <span class="h2-note">7 stages · story first, 100% last</span></h2>
-    <p class="section-intro">Play the story in stages S1–S3, finish the character questlines in S4, rob and earn in S5, clear activities and one-off feats in S6, then grind the 100% checklist in S7. Every stage shows its earned count.</p>
-    <div id="roadmap-grid" class="roadmap-grid"></div>
+  <section id="progress-section" aria-label="Progress to platinum">
+    <div class="section-head">
+      <h2>Progress &amp; stages</h2>
+      <p class="section-meta">Platinum and gold bars, plus earned counts per roadmap stage — pick a stage to filter the checklist above.</p>
+    </div>
+    <div class="goals" id="goal-bar" aria-label="Progress to platinum"></div>
+    <nav class="stages" id="stage-chips" aria-label="Roadmap stages"></nav>
   </section>
 
-  <section id="detail-section" aria-label="Trophy guide">
-    <h2>Trophy guide <span class="h2-note">numbered steps · every step cites its source</span></h2>
-    <div id="detail"></div>
+  <section id="roadmap-section" aria-label="Roadmap to the platinum">
+    <div class="section-head">
+      <h2>Roadmap to the platinum</h2>
+      <p class="section-meta">Built from the official descriptions — which chapters, which collectibles, which counts, in what order.</p>
+    </div>
+    <div id="roadmap-body"></div>
   </section>
 
-  <section id="missable-section" aria-label="Missable audit">
-    <h2>Missable audit <span class="h2-note">every candidate checked against the sources</span></h2>
-    <div id="missable-audit"></div>
-  </section>
-
-  <section id="sources" aria-label="Sources">
-    <h2>Sources <span class="h2-note">cited, never copied · read 20 Nov 2026</span></h2>
-    <div id="sources-list"></div>
+  <section id="sources-section" aria-label="Sources">
+    <div class="section-head">
+      <h2>Sources</h2>
+      <p class="section-meta">Every guide cites its sources by name and link. Sources are cited, never copied.</p>
+    </div>
+    <div id="sources-body"></div>
   </section>
 </main>
 
 <footer>
-  <p>Leonida 100% is an unofficial fan guide. Grand Theft Auto and GTA are trademarks of Take-Two Interactive; this guide uses no Rockstar logo, artwork, or game screenshots. Trophy names, descriptions and grades are shown as PlayStation publishes them. Guide text is written for this entry in its own words; sources are cited beside each step. Works fully offline — no network request is made at run time.</p>
-  <p>How to use the URL: <code>?trophy=28</code> opens a trophy · <code>?spoilers=shown</code> reveals hidden trophies · <code>?kind=story</code> · <code>?grade=gold</code> · <code>?earned-only=1</code> · <code>?view=roadmap</code> or <code>?view=checklist</code>.</p>
+  <p>Leonida 100% is an unofficial fan guide. Grand Theft Auto VI and GTA are marks of Rockstar Games — no Rockstar logo, artwork or game screenshots are used here. Trophy names, descriptions and grades are shown as PlayStation publishes them; every guide is written in our own words and cites its sources. This page loads only its own files and makes no network requests.</p>
 </footer>
-
-<noscript><p class="noscript">This guide needs JavaScript: the checklist, filters and tracker run in your browser, offline, with no network.</p></noscript>
 <script type="module" src="app.js"></script>
 </body>
 </html>

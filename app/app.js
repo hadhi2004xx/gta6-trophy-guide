@@ -1,235 +1,173 @@
-// app.js — boot and wiring for the Leonida 100% trophy guide.
-// Loads app/data/trophies.json, renders every section, keeps the URL in sync
-// (?trophy=, ?spoilers=, ?kind=, ?grade=, ?earned-only=, ?view=), and scrolls
-// to deep links only after the first render has finished.
-
+// renderLeonidaGuide — the bootstrap: load the trophy data, build the store, render
+// every section, wire the controls, then honour the deep links (?view=, ?trophy=,
+// ?kind=, ?grade=, ?spoiler=, ?stage=) only after the first full render, so a link
+// never lands mid-render. Sets window.__shotReady when the page is complete.
+import { createTrophyStore } from './store.js';
 import { computeAudit } from './audit.js';
-import { loadState, saveState, toggleEarned, bumpCounter, exportState, importStateText, resetState } from './store.js';
-import {
-  renderAuditStrip, renderProgress, renderChecklist, renderFeatured,
-  renderRoadmap, renderNextUp, renderDetail, renderSources, renderMissableAudit,
-} from './views.js';
+import { renderAuditStrip, renderGoalBar, renderStageChips, renderChecklist, renderRoadmap, renderSourcesPanel } from './views.js';
+import { findTrophyBySlug, kindOptions, stageOrder, trophyMatchesFilters, KIND_LABELS } from './classify.js';
 
-const DATA_URL = 'data/trophies.json';
+const store = createTrophyStore();
+const params = new URLSearchParams(location.search);
+const expandedIds = new Set();
+let data = null;
+let audit = null;
+let activeStage = params.get('stage') ?? 'all';
 
-const ui = {
-  q: '', kind: 'all', grade: 'all', earnedOnly: false,
-  view: 'checklist', selectedId: 28, spoilers: null,
+const filters = {
+  kind: params.get('kind') ?? 'all',
+  grade: params.get('grade') ?? 'all',
+  earned: 'all',
+  query: params.get('q') ?? '',
+  match(trophy) {
+    if (activeStage !== 'all' && trophy.stage !== activeStage) return false;
+    return trophyMatchesFilters(trophy, { ...this, isEarned: (t) => store.isEarned(t) });
+  },
 };
 
-let trophies = [];
-let state = loadState();
-let hadDeepLink = false;
-let hadTrophyParam = false;
-
-function $(sel) { return document.querySelector(sel); }
-
-function readUrl() {
-  const p = new URLSearchParams(location.search);
-  const trophy = Number.parseInt(p.get('trophy') || '', 10);
-  if (Number.isInteger(trophy) && trophy >= 1 && trophy <= 55) { ui.selectedId = trophy; hadDeepLink = true; hadTrophyParam = true; }
-  const spoilers = p.get('spoilers');
-  if (spoilers === 'hidden' || spoilers === 'shown') {
-    ui.spoilers = spoilers;
-    state.spoilers = spoilers;
-  }
-  const kind = p.get('kind');
-  if (kind) ui.kind = kind;
-  const grade = p.get('grade');
-  if (grade) ui.grade = grade;
-  if (p.get('earned-only') === '1') ui.earnedOnly = true;
-  const view = p.get('view');
-  if (view === 'roadmap' || view === 'checklist') { ui.view = view; hadDeepLink = true; }
-  const q = p.get('q');
-  if (q) ui.q = q;
-}
-
-function writeUrl() {
-  const p = new URLSearchParams();
-  if (ui.selectedId) p.set('trophy', String(ui.selectedId));
-  p.set('spoilers', state.spoilers);
-  if (ui.kind !== 'all') p.set('kind', ui.kind);
-  if (ui.grade !== 'all') p.set('grade', ui.grade);
-  if (ui.earnedOnly) p.set('earned-only', '1');
-  if (ui.view !== 'checklist') p.set('view', ui.view);
-  if (ui.q) p.set('q', ui.q);
-  history.replaceState(null, '', location.pathname + '?' + p.toString());
+function $(id) {
+  return document.getElementById(id);
 }
 
 function renderAll() {
-  $('#audit-strip').innerHTML = renderAuditStrip(trophies);
-  $('#progress').innerHTML = renderProgress(trophies, state);
-  $('#featured').innerHTML = renderFeatured(trophies, state);
-  $('#checklist').innerHTML = renderChecklist(trophies, state, ui);
-  $('#roadmap-grid').innerHTML = renderRoadmap(trophies, state);
-  $('#nextup').innerHTML = renderNextUp(trophies, state);
-  const selected = trophies.find((t) => t.id === ui.selectedId) || null;
-  $('#detail').innerHTML = renderDetail(selected, state);
-  $('#sources-list').innerHTML = renderSources(trophies);
-  $('#missable-audit').innerHTML = renderMissableAudit();
-  document.body.dataset.spoilers = state.spoilers;
-  $('#spoiler-toggle').textContent = state.spoilers === 'hidden' ? 'Spoilers: Hidden' : 'Spoilers: Shown';
-  $('#spoiler-toggle').setAttribute('aria-pressed', String(state.spoilers === 'shown'));
-  $('#earned-only').checked = ui.earnedOnly;
-  $('#search').value = ui.q;
-  $('#kind-filter').value = ui.kind;
-  $('#grade-filter').value = ui.grade;
-  document.querySelectorAll('[data-view-tab]').forEach((b) => {
-    b.classList.toggle('active', b.dataset.viewTab === ui.view);
+  audit = computeAudit(data, store);
+  const sourcesById = new Map(data.sources.map((s) => [s.id, s]));
+  renderAuditStrip($('audit-strip'), audit, data.sources.length);
+  renderGoalBar($('goal-bar'), audit);
+  renderStageChips($('stage-chips'), stageOrder(data.stages), audit, activeStage, (stage) => {
+    activeStage = stage;
+    renderAll();
+    scrollToSection('checklist-section');
   });
-  const counts = computeAudit(trophies);
-  $('#audit-note').textContent = 'Audit: ' + counts.withSource + '/55 guides cite a source · '
-    + counts.stepsCited + '/' + counts.stepsTotal + ' steps cited · '
-    + counts.missableCount + ' possibly missable · ' + counts.doEarlyCount + ' do-early · '
-    + counts.watchCount + ' watch · ' + counts.disagreeCount + ' disagree';
+  $('progress-line').textContent = audit.earned + ' of ' + audit.total + ' earned · ' + (audit.gradeEarned.platinum ?? 0) + '/1 platinum · ' + (audit.gradeEarned.gold ?? 0) + '/2 gold';
+  const shown = renderChecklist($('rows'), $('empty-note'), data.trophies, store, sourcesById, filters, expandedIds, {
+    onProgress: () => renderAll(),
+    onToggleGuide: (trophy) => {
+      if (expandedIds.has(trophy.id)) expandedIds.delete(trophy.id);
+      else expandedIds.add(trophy.id);
+      renderAll();
+    },
+  });
+  $('shown-line').textContent = shown + ' of ' + audit.total + ' shown';
+  renderRoadmap($('roadmap-body'), data, audit);
+  renderSourcesPanel($('sources-body'), data, audit);
+  window.__shotReady = true;
 }
 
-function scrollToDeepLink() {
-  // No deep link in the URL: stay at the top of the page (the cover).
-  if (!hadDeepLink) return;
-  // Scroll only after renderAll has finished, in the next frame, so the
-  // target rows exist and are laid out. Every section and row carries
-  // scroll-margin-top in CSS, so nothing lands under the sticky bar.
-  requestAnimationFrame(() => {
-    if (ui.view === 'roadmap') {
-      const roadmap = document.getElementById('roadmap');
-      if (roadmap) roadmap.scrollIntoView({ behavior: 'auto', block: 'start' });
-      return;
-    }
-    // view === 'checklist': a ?trophy= link lands on that row; a bare
-    // ?view=checklist lands at the top of the section (block start, never
-    // center — the section is far taller than the viewport).
-    if (hadTrophyParam) {
-      const row = document.getElementById('row-' + ui.selectedId);
-      if (row) {
-        row.scrollIntoView({ behavior: 'auto', block: 'center' });
-        return;
-      }
-    }
-    const section = document.getElementById('checklist-section');
-    if (section) section.scrollIntoView({ behavior: 'auto', block: 'start' });
-  });
+function scrollToSection(id) {
+  const node = $(id);
+  if (node) node.scrollIntoView({ behavior: 'instant', block: 'start' });
 }
 
-function selectTrophy(id, scroll) {
-  ui.selectedId = id;
-  renderAll();
-  writeUrl();
-  if (scroll) {
+function honourDeepLinks() {
+  const trophy = findTrophyBySlug(data.trophies, params.get('trophy'));
+  if (trophy) {
+    expandedIds.add(trophy.id);
+    renderAll();
     requestAnimationFrame(() => {
-      const detail = document.getElementById('detail-section');
-      if (detail) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const row = $('trophy-' + trophy.id);
+      if (row) row.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
+    return;
   }
+  const view = params.get('view');
+  if (view === 'roadmap') scrollToSection('roadmap-section');
+  else if (view === 'sources') scrollToSection('sources-section');
+  // No view param: stay at the top, so the cover shows the masthead first.
 }
 
-function downloadFile(name, text) {
-  const blob = new Blob([text], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = name;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function bindEvents() {
-  document.addEventListener('click', (ev) => {
-    const tick = ev.target.closest('[data-tick]');
-    if (tick) {
-      toggleEarned(state, Number(tick.dataset.tick));
-      renderAll();
-      writeUrl();
-      return;
-    }
-    const open = ev.target.closest('[data-open]');
-    if (open) {
-      selectTrophy(Number(open.dataset.open), true);
-      return;
-    }
-    const inc = ev.target.closest('[data-inc]');
-    if (inc) {
-      const t = trophies.find((x) => x.id === Number(inc.dataset.inc));
-      if (t && t.count) { bumpCounter(state, t.id, t.count.step, t.count.target); renderAll(); }
-      return;
-    }
-    const dec = ev.target.closest('[data-dec]');
-    if (dec) {
-      const t = trophies.find((x) => x.id === Number(dec.dataset.dec));
-      if (t && t.count) { bumpCounter(state, t.id, -t.count.step, t.count.target); renderAll(); }
-      return;
-    }
-    const tab = ev.target.closest('[data-view-tab]');
-    if (tab) {
-      ui.view = tab.dataset.viewTab;
-      renderAll();
-      writeUrl();
-      const target = document.getElementById(ui.view === 'roadmap' ? 'roadmap' : 'checklist-section');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Enter' && ev.target.matches && ev.target.matches('.trow')) {
-      selectTrophy(Number(ev.target.dataset.trophy), true);
-    }
-  });
-
-  $('#search').addEventListener('input', (ev) => {
-    ui.q = ev.target.value;
+function wireControls() {
+  const kindSelect = $('filter-kind');
+  for (const kind of kindOptions(data.trophies)) {
+    const option = document.createElement('option');
+    option.value = kind;
+    option.textContent = KIND_LABELS[kind] ?? kind;
+    kindSelect.append(option);
+  }
+  kindSelect.value = KIND_LABELS[filters.kind] ? filters.kind : 'all';
+  kindSelect.addEventListener('change', () => {
+    filters.kind = kindSelect.value;
     renderAll();
-    writeUrl();
   });
-  $('#kind-filter').addEventListener('change', (ev) => { ui.kind = ev.target.value; renderAll(); writeUrl(); });
-  $('#grade-filter').addEventListener('change', (ev) => { ui.grade = ev.target.value; renderAll(); writeUrl(); });
-  $('#earned-only').addEventListener('change', (ev) => { ui.earnedOnly = ev.target.checked; renderAll(); writeUrl(); });
-  $('#spoiler-toggle').addEventListener('click', () => {
-    state.spoilers = state.spoilers === 'hidden' ? 'shown' : 'hidden';
-    saveState(state);
+
+  const gradeSelect = $('filter-grade');
+  gradeSelect.value = filters.grade;
+  gradeSelect.addEventListener('change', () => {
+    filters.grade = gradeSelect.value;
     renderAll();
-    writeUrl();
   });
-  $('#export-btn').addEventListener('click', () => {
-    downloadFile('leonida-100-progress.json', exportState(state));
+
+  const earnedSelect = $('filter-earned');
+  earnedSelect.addEventListener('change', () => {
+    filters.earned = earnedSelect.value;
+    renderAll();
   });
-  $('#import-btn').addEventListener('click', () => $('#import-file').click());
-  $('#import-file').addEventListener('change', async (ev) => {
-    const file = ev.target.files && ev.target.files[0];
+
+  const search = $('search');
+  search.value = filters.query;
+  search.addEventListener('input', () => {
+    filters.query = search.value;
+    renderAll();
+  });
+
+  const spoiler = $('spoiler-toggle');
+  spoiler.checked = store.spoilerOn();
+  spoiler.addEventListener('change', () => {
+    store.setSpoiler(spoiler.checked);
+    renderAll();
+  });
+
+  $('view-checklist').addEventListener('click', () => scrollToSection('checklist-section'));
+  $('view-roadmap').addEventListener('click', () => scrollToSection('roadmap-section'));
+  $('view-sources').addEventListener('click', () => scrollToSection('sources-section'));
+
+  $('export-btn').addEventListener('click', () => {
+    const blob = new Blob([store.exportJson()], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'leonida-100-progress.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    $('status-line').textContent = 'Progress exported.';
+  });
+
+  $('import-file').addEventListener('change', async (event) => {
+    const file = event.target.files?.[0];
     if (!file) return;
     try {
-      const text = await file.text();
-      state = importStateText(text);
+      const result = await file.text().then((text) => store.importJson(text, data.trophies));
+      $('status-line').textContent = 'Imported ' + result.earned + ' earned trophies.';
       renderAll();
-      writeUrl();
-      $('#import-status').textContent = 'Imported ' + state.earned.length + ' earned trophies.';
-    } catch (err) {
-      $('#import-status').textContent = 'Import failed: ' + err.message;
+    } catch {
+      $('status-line').textContent = 'Import failed — that file is not a Leonida 100% export.';
     }
-    ev.target.value = '';
+    event.target.value = '';
   });
-  $('#reset-btn').addEventListener('click', () => {
-    if (window.confirm('Reset all earned trophies and counters? This cannot be undone.')) {
-      state = resetState();
-      renderAll();
-      writeUrl();
-    }
+
+  $('reset-btn').addEventListener('click', () => {
+    store.resetAll();
+    expandedIds.clear();
+    $('status-line').textContent = 'Progress cleared.';
+    renderAll();
   });
 }
 
 async function boot() {
-  readUrl();
-  const res = await fetch(DATA_URL);
-  if (!res.ok) throw new Error('Could not load ' + DATA_URL);
-  const data = await res.json();
-  trophies = data.trophies;
-  bindEvents();
+  const response = await fetch('data/trophies.json');
+  if (!response.ok) throw new Error('trophies.json did not load');
+  data = await response.json();
+  // URL overrides for the screenshot views: the cover shows every name, the
+  // tracker shot shows the spoiler mask at work.
+  if (params.get('spoiler') === 'off') store.setSpoiler(false);
+  if (params.get('spoiler') === 'on') store.setSpoiler(true);
+  wireControls();
   renderAll();
-  scrollToDeepLink();
+  honourDeepLinks();
 }
 
-boot().catch((err) => {
-  const el = document.getElementById('app-error');
-  if (el) el.textContent = 'Failed to load the trophy data: ' + err.message;
+boot().catch((error) => {
+  const note = $('empty-note');
+  note.textContent = 'The guide did not load: ' + error.message;
+  note.hidden = false;
+  window.__shotReady = false;
 });
