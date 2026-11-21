@@ -1,6 +1,6 @@
-[![Leonida 100% rank](https://make.fun/badge/hadhi2004xx/gta6-trophy-guide/rank.svg)](https://make.fun/c/gta6-trophy-guide-01/leaderboard)
-[![Leonida 100% reward](https://make.fun/badge/hadhi2004xx/gta6-trophy-guide/reward.svg)](https://make.fun/c/gta6-trophy-guide-01)
-[![Leonida 100% on make.fun](https://make.fun/badge/gta6-trophy-guide-01/hadhi2004xx/gta6-trophy-guide.svg)](https://make.fun/c/gta6-trophy-guide-01)
+[![Leonida 100% rank](https://make.fun/badge/gta6-trophy-guide-01/hadhi2004xx/gta6-trophy-guide/rank.svg)](https://make.fun/c/gta6-trophy-guide-01/leaderboard)
+[![Leonida 100% reward](https://make.fun/badge/gta6-trophy-guide-01/hadhi2004xx/gta6-trophy-guide/reward.svg)](https://make.fun/c/gta6-trophy-guide-01)
+[![Leonida 100% on make.fun](https://make.fun/badge/gta6-trophy-guide-01.svg)](https://make.fun/c/gta6-trophy-guide-01)
 
 # Leonida 100% — GTA VI Trophy Guide & Tracker
 
